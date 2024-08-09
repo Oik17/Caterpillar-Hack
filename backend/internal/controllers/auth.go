@@ -20,14 +20,14 @@ func Signup(c echo.Context) error {
 	db := database.DB.Db
 	user := new(models.User)
 	if err := c.Bind(user); err != nil {
-		return echo.NewHTTPError(http.StatusBadRequest, "Invalid request payload")
+		return c.JSON(http.StatusInternalServerError, map[string]string{"message": err.Error()})
 	}
 
 	user.ID = uuid.New()
 	var existingUser models.User
 	err := db.Get(&existingUser, "SELECT * FROM users WHERE email=$1", user.Email)
 	if err == nil {
-		return echo.NewHTTPError(http.StatusConflict, "User already exists")
+		return c.JSON(http.StatusInternalServerError, map[string]string{"message": "User already exists"})
 	}
 
 	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(user.Password), bcrypt.DefaultCost)
@@ -40,7 +40,7 @@ func Signup(c echo.Context) error {
 	_, err = db.Exec("INSERT INTO users (id, username, email, password) VALUES ($1, $2, $3, $4)",
 		user.ID, user.UserName, user.Email, user.Password)
 	if err != nil {
-		return echo.NewHTTPError(http.StatusInternalServerError, "Could not create user")
+		return c.JSON(http.StatusInternalServerError, map[string]string{"message": err.Error()})
 	}
 
 	return c.JSON(http.StatusCreated, map[string]string{"message": "User created successfully"})
