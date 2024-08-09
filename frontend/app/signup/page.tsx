@@ -125,8 +125,8 @@ export default function ProfileForm() {
               )}
             />
             <section className="text-center">
-              <Link href={"/signup"} className="text-xs underline">
-                Dont have an account? Sign Up
+              <Link href={"/"} className="text-xs underline">
+                Already have an account? Login 
               </Link>
             </section>
             <Button type="submit">Submit</Button>

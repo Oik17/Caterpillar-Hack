@@ -4,6 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import Link from "next/link";
+import axios, { AxiosError } from "axios";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -16,6 +17,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { Toaster, toast } from "sonner";
 
 const formSchema = z.object({
   email: z.string().email("Invalid email format"),
@@ -31,13 +33,24 @@ export default function ProfileForm() {
     },
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    try {
+      const response =await axios.post("http://localhost:8080/login",{
+        email:values.email,
+        password:values.password
+      })
+      console.log("Signup successful:", response.data);
+      toast.success(response.data.message)
+    } catch (error:AxiosError|any) {
+      console.error("Signup failed:", error);
+      toast.error(error.message)
+    }
   }
 
   return (
     <main className="w-full h-screen flex justify-center items-center">
       <section className="w-96">
+        <Toaster position="top-center" richColors/>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-3 flex flex-col">
             <FormField
@@ -61,7 +74,7 @@ export default function ProfileForm() {
                 <FormItem>
                   <FormLabel>Password</FormLabel>
                   <FormControl>
-                    <Input placeholder="password" {...field} />
+                    <Input type="password" placeholder="password" {...field} />
                   </FormControl>
                   <FormDescription>This is your password.</FormDescription>
                   <FormMessage />
