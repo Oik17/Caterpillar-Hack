@@ -30,10 +30,8 @@ func Protected(next echo.HandlerFunc) echo.HandlerFunc {
 			return echo.NewHTTPError(http.StatusInternalServerError, "Email claim missing or invalid")
 		}
 
-		// Add any additional logic here if necessary
 		fmt.Printf("User email: %s\n", email)
 
-		// Continue to the next handler
 		return next(c)
 	}
 }
