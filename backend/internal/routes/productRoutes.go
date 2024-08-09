@@ -9,4 +9,5 @@ func ProductRoutes(e *echo.Echo) {
 	r := e.Group("/products")
 
 	r.POST("/create", controllers.CreateProduct)
+	r.GET("/getAll", controllers.GetAllProduct)
 }

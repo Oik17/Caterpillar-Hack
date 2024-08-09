@@ -28,3 +28,14 @@ func CreateProduct(c echo.Context) error {
 	}
 	return c.JSON(http.StatusOK, product)
 }
+
+func GetAllProduct(c echo.Context) error {
+	product, err := services.GetAllProducts()
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, map[string]string{
+			"message": "Failed to fetch products",
+			"data":    err.Error(),
+		})
+	}
+	return c.JSON(http.StatusOK, product)
+}
