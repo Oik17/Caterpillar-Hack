@@ -4,6 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import Link from "next/link";
+import axios, { AxiosError } from "axios";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -16,6 +17,8 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { Toaster, toast } from "sonner";
+import { useState } from "react";
 
 const formSchema = z
   .object({
@@ -30,6 +33,7 @@ const formSchema = z
   });
 
 export default function ProfileForm() {
+  
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -40,12 +44,24 @@ export default function ProfileForm() {
     },
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    try {
+      const response =await axios.post("http://localhost:8080/signup",{
+        username:values.username,
+        email:values.email,
+        password:values.password
+      })
+      console.log("Signup successful:", response.data);
+      toast.success(response.data.message)
+    } catch (error:AxiosError|any) {
+      console.error("Signup failed:", error);
+      toast.error(error.message)
+    }
   }
 
   return (
     <main className="w-full h-screen flex justify-center items-center">
+      <Toaster position="top-center" richColors/>
       <section className="w-96">
         <Form {...form}>
           <form
