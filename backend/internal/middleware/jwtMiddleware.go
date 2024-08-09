@@ -1,10 +1,10 @@
 package middleware
 
 import (
-	"fmt"
 	"net/http"
 
 	"github.com/golang-jwt/jwt/v5"
+	"github.com/google/uuid"
 	"github.com/labstack/echo/v4"
 )
 
@@ -25,12 +25,17 @@ func Protected(next echo.HandlerFunc) echo.HandlerFunc {
 			return echo.NewHTTPError(http.StatusInternalServerError, "Failed to parse JWT claims")
 		}
 
-		email, ok := claims["email"].(string)
+		userIDStr, ok := claims["id"].(string)
 		if !ok {
-			return echo.NewHTTPError(http.StatusInternalServerError, "Email claim missing or invalid")
+			return echo.NewHTTPError(http.StatusInternalServerError, "User ID claim missing or invalid")
 		}
 
-		fmt.Printf("User email: %s\n", email)
+		userID, err := uuid.Parse(userIDStr)
+		if err != nil {
+			return echo.NewHTTPError(http.StatusInternalServerError, "Invalid user ID format")
+		}
+
+		c.Set("user_id", userID)
 
 		return next(c)
 	}

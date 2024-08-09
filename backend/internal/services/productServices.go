@@ -7,7 +7,7 @@ import (
 
 func CreateProduct(input models.Product) error {
 	db := database.DB.Db
-	_, err := db.Exec(`INSERT INTO products (id, time, machine, component, parameter, value) VALUES ($1, $2, $3, $4, $5, $6)`, input.ID, input.Time, input.Machine, input.Component, input.Parameter, input.Value)
+	_, err := db.Exec(`INSERT INTO products (id, user_id, time, machine, component, parameter, value) VALUES ($1, $2, $3, $4, $5, $6, $7)`, input.ID, input.UserID, input.Time, input.Machine, input.Component, input.Parameter, input.Value)
 	if err != nil {
 		return err
 	}

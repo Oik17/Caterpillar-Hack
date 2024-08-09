@@ -8,6 +8,7 @@ import (
 
 type Product struct {
 	ID        uuid.UUID `json:"id"`
+	UserID    uuid.UUID `json:"user_id"`
 	Time      time.Time `json:"time"`
 	Machine   string    `json:"machine"`
 	Component string    `json:"component"`

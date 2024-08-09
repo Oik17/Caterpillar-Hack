@@ -19,6 +19,10 @@ func CreateProduct(c echo.Context) error {
 		})
 	}
 	product.ID = uuid.New()
+
+	userID := c.Get("user_id").(uuid.UUID)
+	product.UserID = userID
+
 	err = services.CreateProduct(product)
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, map[string]string{
