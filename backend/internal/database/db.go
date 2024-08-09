@@ -52,9 +52,19 @@ func runMigrations(db *sqlx.DB) {
 	_, err := db.Exec(`
 		CREATE TABLE IF NOT EXISTS users (
 			id UUID PRIMARY KEY	,
-			username VARCHAR(255) NOT NULL,
+			username VARCHAR(255) NOT NULL UNIQUE,
 			email VARCHAR(255) NOT NULL UNIQUE,
 			password VARCHAR(255) NOT NULL
+		);
+
+		CREATE TABLE IF NOT EXISTS products(
+			id UUID PRIMARY KEY,
+			user_id UUID REFERENCES "users"(id),
+			time TIMESTAMP,
+			machine VARCHAR(255),
+			component VARCHAR(255),
+			parameter VARCHAR(255),
+			value VARCHAR(255)
 		);
 	`)
 

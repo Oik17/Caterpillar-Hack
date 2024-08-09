@@ -6,6 +6,7 @@ import (
 	"github.com/Oik17/Caterpillar-Hack/internal/controllers"
 	"github.com/Oik17/Caterpillar-Hack/internal/database"
 	middleWare "github.com/Oik17/Caterpillar-Hack/internal/middleware"
+	"github.com/Oik17/Caterpillar-Hack/internal/routes"
 	"github.com/Oik17/Caterpillar-Hack/internal/utils"
 
 	echojwt "github.com/labstack/echo-jwt/v4"
@@ -24,6 +25,8 @@ func main() {
 	e.POST("/signup", controllers.Signup)
 	e.POST("/login", controllers.Login)
 
+	routes.ProductRoutes(e)
+
 	r := e.Group("/restricted")
 	r.Use(echojwt.JWT(controllers.JWTSecret))
 
@@ -32,5 +35,6 @@ func main() {
 			"message": "pong",
 		})
 	}, echojwt.JWT(controllers.JWTSecret), middleWare.Protected)
+
 	e.Logger.Fatal(e.Start(":" + utils.Config("PORT")))
 }
