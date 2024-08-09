@@ -50,7 +50,12 @@ func Connect() {
 
 func runMigrations(db *sqlx.DB) {
 	_, err := db.Exec(`
-		CREATE TABLE test (test VARCHAR(255));
+		CREATE TABLE IF NOT EXISTS users (
+			id UUID PRIMARY KEY	,
+			username VARCHAR(255) NOT NULL,
+			email VARCHAR(255) NOT NULL UNIQUE,
+			password VARCHAR(255) NOT NULL
+		);
 	`)
 
 	if err != nil {

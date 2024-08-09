@@ -3,8 +3,12 @@ package main
 import (
 	"net/http"
 
+	"github.com/Oik17/Caterpillar-Hack/internal/controllers"
 	"github.com/Oik17/Caterpillar-Hack/internal/database"
+	middleWare "github.com/Oik17/Caterpillar-Hack/internal/middleware"
 	"github.com/Oik17/Caterpillar-Hack/internal/utils"
+	echojwt "github.com/labstack/echo-jwt/v4"
+
 	"github.com/labstack/echo/v4/middleware"
 
 	"github.com/labstack/echo/v4"
@@ -16,6 +20,13 @@ func main() {
 
 	e.Use(middleware.Logger())
 	e.Use(middleware.Recover())
+
+	e.POST("/signup", controllers.Signup)
+	e.POST("/login", controllers.Login)
+
+	r := e.Group("/restricted")
+	r.Use(echojwt.JWT(controllers.JWTSecret))
+	r.GET("", middleWare.Protected)
 
 	e.GET("/ping", func(c echo.Context) error {
 		return c.JSON(http.StatusOK, map[string]string{
