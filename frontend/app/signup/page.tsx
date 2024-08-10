@@ -63,7 +63,7 @@ export default function ProfileForm() {
     <main className="w-full h-screen flex flex-col justify-center items-center gap-4">
       <Toaster position="top-center" richColors/>
         <span className="text-2xl font-semibold un">Sign Up</span>
-      <section className="md:w-96 w-[300px] border-2 px-8 py-6 rounded-xl bg-[#e9e8e8]">
+      <section className="md:w-96 w-[300px] border-2 px-8 py-6 bg-[#e9e8e8]">
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(onSubmit)}
@@ -132,7 +132,7 @@ export default function ProfileForm() {
             </section>
             <div className="flex justify-center">
 
-            <Button type="submit" className="w-[150px] mt-2">Submit</Button>
+            <Button type="submit" className="w-[150px] mt-2 bg-yellow-400 text-yellow-600 font-bold hover:bg-yellow-300">Submit</Button>
             </div>
           </form>
         </Form>

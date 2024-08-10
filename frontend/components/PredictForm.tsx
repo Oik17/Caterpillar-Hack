@@ -417,7 +417,7 @@ export const PredictForm = ({}: Props) => {
               </div>
             </div>
             <div className="flex justify-center">
-              <Button type="submit" className="md:w-[300px] w-[200px]">
+              <Button type="submit" className="md:w-[300px] w-[200px] bg-yellow-400 text-yellow-600 font-bold hover:bg-yellow-300">
                 Generate Prediction
               </Button>
             </div>
