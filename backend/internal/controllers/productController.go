@@ -11,15 +11,46 @@ import (
 )
 
 func CreateProduct(c echo.Context) error {
-	var product models.Product
-	err := c.Bind(&product)
+	var input struct {
+		Machine    string `json:"machine"`
+		Components struct {
+			Engine struct {
+				Temperature float64 `json:"temperature"`
+				Speed       float64 `json:"speed"`
+				OilPressure float64 `json:"oilPressure"`
+			} `json:"engine"`
+			Fuel struct {
+				WaterInFuel float64 `json:"WaterInFuel"`
+				Level       float64 `json:"level"`
+				Pressure    float64 `json:"Pressure"`
+				Temperature float64 `json:"Temperature"`
+			} `json:"fuel"`
+			Drive struct {
+				TransmissionPressure float64 `json:"transmissionPressure"`
+				BrakeControl         float64 `json:"brakecontrol"`
+				PedalSensor          float64 `json:"pedalsensor"`
+			} `json:"drive"`
+			Misc struct {
+				ExhaustGasTemperature float64 `json:"exhaustGasTemperature"`
+				AirFilterPressure     float64 `json:"airFilterPresure"`
+				SystemVoltage         float64 `json:"systemVoltage"`
+				HydraulicPumpRate     float64 `json:"hydraulicPumpRate"`
+			} `json:"misc"`
+		} `json:"components"`
+	}
+
+	err := c.Bind(&input)
 	if err != nil {
 		return c.JSON(http.StatusBadRequest, map[string]string{
 			"message": "Failed to create product",
 			"data":    err.Error(),
 		})
 	}
+
+	var product models.Product
 	product.ID = uuid.New()
+	product.Machine = input.Machine
+	product.Components = input.Components
 
 	userID := c.Get("user_id").(uuid.UUID)
 	product.UserID = userID
@@ -31,6 +62,7 @@ func CreateProduct(c echo.Context) error {
 			"data":    err.Error(),
 		})
 	}
+
 	return c.JSON(http.StatusOK, product)
 }
 
@@ -39,6 +71,18 @@ func GetAllProduct(c echo.Context) error {
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, map[string]string{
 			"message": "Failed to fetch products",
+			"data":    err.Error(),
+		})
+	}
+	return c.JSON(http.StatusOK, product)
+}
+
+func GetProductByMachine(c echo.Context) error {
+	machine := c.Param("machine")
+	product, err := services.GetProductByMachine(machine)
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, map[string]string{
+			"message": "Failed to get products",
 			"data":    err.Error(),
 		})
 	}
