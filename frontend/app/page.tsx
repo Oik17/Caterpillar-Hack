@@ -52,8 +52,9 @@ export default function ProfileForm() {
   }
 
   return (
-    <main className="w-full h-screen flex justify-center items-center">
-      <section className="w-96">
+    <main className="w-full h-screen flex flex-col justify-center items-center">
+      <span className="text-2xl font-semibold un">Log in</span>
+      <section className="md:w-96 w-[300px] border-2 px-8 py-6 bg-[#e9e8e8]">
         <Toaster position="top-center" richColors />
         <Form {...form}>
           <form
@@ -67,7 +68,7 @@ export default function ProfileForm() {
                 <FormItem>
                   <FormLabel>Email</FormLabel>
                   <FormControl>
-                    <Input placeholder="email" {...field} />
+                    <Input className="md:w-[300px] w-[200px]" placeholder="email" {...field} />
                   </FormControl>
                   <FormDescription>This is your email.</FormDescription>
                   <FormMessage />
@@ -81,7 +82,7 @@ export default function ProfileForm() {
                 <FormItem>
                   <FormLabel>Password</FormLabel>
                   <FormControl>
-                    <Input type="password" placeholder="password" {...field} />
+                    <Input className="md:w-[300px] w-[200px]" type="password" placeholder="password" {...field} />
                   </FormControl>
                   <FormDescription>This is your password.</FormDescription>
                   <FormMessage />
@@ -93,7 +94,7 @@ export default function ProfileForm() {
                 Dont have an account? Sign Up
               </Link>
             </section>
-            <Button type="submit">Submit</Button>
+            <Button type="submit" className="bg-yellow-400 text-yellow-600 font-bold hover:bg-yellow-300">Submit</Button>
           </form>
         </Form>
       </section>

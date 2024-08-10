@@ -1,6 +1,8 @@
 import type { Config } from "tailwindcss"
 import defaultTheme from 'tailwindcss/defaultTheme';
 import colors from 'tailwindcss/colors';
+import { PluginAPI } from 'tailwindcss/types/config';
+
 const flattenColorPalette = require('tailwindcss/lib/util/flattenColorPalette').default
 
 const config = {
@@ -77,7 +79,26 @@ const config = {
       },
     },
   },
-  plugins: [require("tailwindcss-animate"),addVariablesForColors,],
+  plugins: [require("tailwindcss-animate"),addVariablesForColors,function({ addUtilities }:PluginAPI) {
+      addUtilities({
+        '.scrollbar::-webkit-scrollbar': {
+          width: '10px',
+          height: '20px',
+        },
+        '.scrollbar::-webkit-scrollbar-track': {
+          borderRadius: '100vh',
+          background: '#f7f4ed',
+        },
+        '.scrollbar::-webkit-scrollbar-thumb': {
+          background: '#FDE047',
+          borderRadius: '100vh',
+          // border: '3px solid #FDE047',
+        },
+        '.scrollbar::-webkit-scrollbar-thumb:hover': {
+          background: '#FACC15',
+        },
+      },);
+    }],
 } satisfies Config
 
 function addVariablesForColors({ addBase, theme }: any) {

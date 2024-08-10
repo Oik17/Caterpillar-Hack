@@ -18,7 +18,7 @@ interface DataProps{
 }
 
 export function DropdownMenuRadioGroupDemo({onDataReceive}:DataProps) {
-    const [position, setPosition] = React.useState("bottom")
+    const [position, setPosition] = React.useState("select")
     const sendDataToParent = (value:string) => {
     onDataReceive(value); 
   };
@@ -31,15 +31,16 @@ export function DropdownMenuRadioGroupDemo({onDataReceive}:DataProps) {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="outline">{position}</Button>
+        <Button variant="outline" className="md:w-[300px] bg-yellow-200 hover:bg-yellow-100">{position}</Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56">
         <DropdownMenuLabel>Panel Position</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuRadioGroup value={position} onValueChange={handleValueChange}>
-          <DropdownMenuRadioItem value="top">Top</DropdownMenuRadioItem>
-          <DropdownMenuRadioItem value="bottom">Bottom</DropdownMenuRadioItem>
-          <DropdownMenuRadioItem value="right">Right</DropdownMenuRadioItem>
+          <DropdownMenuRadioItem value="Excaviator">Excaviator</DropdownMenuRadioItem>
+          <DropdownMenuRadioItem value="Articulated Truck">Articulated Truck</DropdownMenuRadioItem>
+          <DropdownMenuRadioItem value="Backhoe Loader">Backhoe Loader</DropdownMenuRadioItem>
+          <DropdownMenuRadioItem value="Dozer">Dozer</DropdownMenuRadioItem>
         </DropdownMenuRadioGroup>
       </DropdownMenuContent>
     </DropdownMenu>

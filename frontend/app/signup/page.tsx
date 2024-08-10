@@ -60,9 +60,10 @@ export default function ProfileForm() {
   }
 
   return (
-    <main className="w-full h-screen flex justify-center items-center">
+    <main className="w-full h-screen flex flex-col justify-center items-center gap-4">
       <Toaster position="top-center" richColors/>
-      <section className="w-96">
+        <span className="text-2xl font-semibold un">Sign Up</span>
+      <section className="md:w-96 w-[300px] border-2 px-8 py-6 bg-[#e9e8e8]">
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(onSubmit)}
@@ -75,7 +76,7 @@ export default function ProfileForm() {
                 <FormItem>
                   <FormLabel>Username</FormLabel>
                   <FormControl>
-                    <Input placeholder="username" {...field} />
+                    <Input  className="md:w-[300px] w-[200px]" placeholder="username" {...field} />
                   </FormControl>
                   {/* <FormDescription>This is your username.</FormDescription> */}
                   <FormMessage />
@@ -89,7 +90,7 @@ export default function ProfileForm() {
                 <FormItem>
                   <FormLabel>Email</FormLabel>
                   <FormControl>
-                    <Input placeholder="email" {...field} />
+                    <Input  className="md:w-[300px] w-[200px]" placeholder="email" {...field} />
                   </FormControl>
                   {/* <FormDescription>This is your email.</FormDescription> */}
                   <FormMessage />
@@ -103,7 +104,7 @@ export default function ProfileForm() {
                 <FormItem>
                   <FormLabel>Password</FormLabel>
                   <FormControl>
-                    <Input type="password" placeholder="******" {...field} />
+                    <Input  className="md:w-[300px] w-[200px]" type="password" placeholder="******" {...field} />
                   </FormControl>
                   {/* <FormDescription>This is your password.</FormDescription> */}
                   <FormMessage />
@@ -117,7 +118,7 @@ export default function ProfileForm() {
                 <FormItem>
                   <FormLabel>Confirm Password</FormLabel>
                   <FormControl>
-                    <Input type="password" placeholder="******" {...field} />
+                    <Input className="md:w-[300px] w-[200px]" type="password" placeholder="******" {...field} />
                   </FormControl>
                   {/* <FormDescription>Re-enter your password.</FormDescription> */}
                   <FormMessage />
@@ -129,7 +130,10 @@ export default function ProfileForm() {
                 Already have an account? Login 
               </Link>
             </section>
-            <Button type="submit">Submit</Button>
+            <div className="flex justify-center">
+
+            <Button type="submit" className="w-[150px] mt-2 bg-yellow-400 text-yellow-600 font-bold hover:bg-yellow-300">Submit</Button>
+            </div>
           </form>
         </Form>
       </section>

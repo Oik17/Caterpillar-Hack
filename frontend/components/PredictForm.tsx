@@ -23,283 +23,407 @@ import { useState } from "react";
 
 type Props = {};
 
-// Define the schema for the form using Zod
 const formSchema = z.object({
-  components: z.object({
-    engine: z.object({
-      temperature: z.number(),
-      speed: z.number(),
-      oilPressure: z.number(),
-    }),
-    fuel: z.object({
-      WaterInFuel: z.number(),
-      level: z.number(),
-      Pressure: z.number(),
-      Temperature: z.number(),
-    }),
-    drive: z.object({
-      transmissionPressure: z.number(),
-      brakecontrol: z.number(),
-      pedalsensor: z.number(),
-    }),
-    misc: z.object({
-      exhaustGasTemperature: z.number(),
-      airFilterPresure: z.number(),
-      systemVoltage: z.number(),
-      hydraulicPumpRate: z.number(),
-    }),
-  }),
+  machine: z.string().min(1, "Please select a machine"),
+  engineTemperature: z.string().min(1, "Temperature is required"),
+  engineSpeed: z.string().min(1, "Engine Speed is required"),
+  oilPressure: z.string().min(1, "oilPressure is required"),
+  fuelTemperature: z.string().min(1, "Fuel Temperature is required"),
+  fuelLevel: z.string().min(1, "Fuel Level is required"),
+  WaterInFuel: z.string().min(1, "WaterInFuel is required"),
+  fuelPressure: z.string().min(1, "Fuel Pressure is required"),
+  transmissionPressure: z.string().min(1, "Transmission pressure is required"),
+  brakeControl: z.string().min(1, "Brake control is required"),
+  pedalSensor: z.string().min(1, "Pedal sensor is required"),
+  exhaustGasTemperature: z
+    .string()
+    .min(1, "Exhaust gas temperature is required"),
+  airFilterPressure: z.string().min(1, "Air filter pressure is required"),
+  systemVoltage: z.string().min(1, "System voltage is required"),
+  hydraulicPumpRate: z.string().min(1, "Hydraulic pump rate is required"),
 });
 
 export const PredictForm = ({}: Props) => {
-  const [dataFromChild, setDataFromChild] = useState('');
+  const [dataFromChild, setDataFromChild] = useState("");
   const handleDataFromChild = async (data: string) => {
     setDataFromChild(data);
     console.log(data);
+    // console.log(dataFromChild)
   };
 
   const router = useRouter();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      components: {
-        engine: {
-          temperature: 22,
-          speed: 80,
-          oilPressure: 20,
-        },
-        fuel: {
-          WaterInFuel: 70,
-          level: 2,
-          Pressure: 45,
-          Temperature: 67,
-        },
-        drive: {
-          transmissionPressure: 90,
-          brakecontrol: 1,
-          pedalsensor: 5,
-        },
-        misc: {
-          exhaustGasTemperature: 190,
-          airFilterPresure: 20,
-          systemVoltage: 12.41,
-          hydraulicPumpRate: 77.65,
-        },
-      },
+      machine: "",
+      engineTemperature: "",
+      engineSpeed: "",
+      oilPressure: "",
+      fuelTemperature: "",
+      fuelLevel: "",
+      WaterInFuel: "",
+      fuelPressure: "",
+      transmissionPressure: "",
+      brakeControl: "",
+      pedalSensor: "",
+      exhaustGasTemperature: "",
+      airFilterPressure: "",
+      systemVoltage: "",
+      hydraulicPumpRate: "",
     },
   });
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     try {
-      console.log("Predict", values);
-      // You can send this data to your backend or use it for prediction
+      console.log(values);
+      toast.success("Form submitted successfully!");
     } catch (error: AxiosError | any) {
-      console.log("error");
+      console.error("Error:", error);
+      toast.error("Failed to submit form.");
     }
   }
-
   return (
-    <div className="w-96">
-      <Form {...form}>
-        <form
-          onSubmit={form.handleSubmit(onSubmit)}
-          className="space-y-3 flex flex-col"
-        >
-          {/* Engine Fields */}
-          <FormField
-            control={form.control}
-            name="components.engine.temperature"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Engine Temperature</FormLabel>
-                <FormControl>
-                  <Input type="number" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="components.engine.speed"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Engine Speed</FormLabel>
-                <FormControl>
-                  <Input type="number" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="components.engine.oilPressure"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Oil Pressure</FormLabel>
-                <FormControl>
-                  <Input type="number" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          {/* Fuel Fields */}
-          <FormField
-            control={form.control}
-            name="components.fuel.WaterInFuel"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Water In Fuel</FormLabel>
-                <FormControl>
-                  <Input type="number" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="components.fuel.level"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Fuel Level</FormLabel>
-                <FormControl>
-                  <Input type="number" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="components.fuel.Pressure"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Fuel Pressure</FormLabel>
-                <FormControl>
-                  <Input type="number" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="components.fuel.Temperature"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Fuel Temperature</FormLabel>
-                <FormControl>
-                  <Input type="number" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          {/* Drive Fields */}
-          <FormField
-            control={form.control}
-            name="components.drive.transmissionPressure"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Transmission Pressure</FormLabel>
-                <FormControl>
-                  <Input type="number" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="components.drive.brakecontrol"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Brake Control</FormLabel>
-                <FormControl>
-                  <Input type="number" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="components.drive.pedalsensor"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Pedal Sensor</FormLabel>
-                <FormControl>
-                  <Input type="number" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          {/* Misc Fields */}
-          <FormField
-            control={form.control}
-            name="components.misc.exhaustGasTemperature"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Exhaust Gas Temperature</FormLabel>
-                <FormControl>
-                  <Input type="number" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="components.misc.airFilterPresure"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Air Filter Pressure</FormLabel>
-                <FormControl>
-                  <Input type="number" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="components.misc.systemVoltage"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>System Voltage</FormLabel>
-                <FormControl>
-                  <Input type="number" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="components.misc.hydraulicPumpRate"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Hydraulic Pump Rate</FormLabel>
-                <FormControl>
-                  <Input type="number" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          <Button type="submit">Submit</Button>
-        </form>
-      </Form>
+    <div className="w-full   flex justify-center">
+      {/* <span className="text-2xl bg-yellow-300 p-2 rounded-md w-full">
+        Machine
+      </span> */}
+      <Toaster position="top-center" richColors/>
+      <div className="w-[80%]">
+        <Form {...form}>
+          <form
+            onSubmit={form.handleSubmit(onSubmit)}
+            className="space-y-3 flex flex-col"
+          >
+            <FormField
+              control={form.control}
+              name="machine"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Machine: </FormLabel>
+                  <FormControl>
+                    <Input
+                          type="text"
+                          placeholder="machine"
+                          {...field}
+                          className="md:md:w-[300px] w-[200px] "
+                        />
+                  </FormControl>
+                  {/* <FormDescription>This is your email.</FormDescription> */}
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <span className="text-2xl bg-yellow-300 p-2 rounded-md">
+              Components
+            </span>
+            <div className="border-2 p-8 rounded-xl">
+              <span className="text-xl underline decoration-yellow-400">
+                Engine
+              </span>
+              <div className="grid md:grid-cols-2 md:place-items-center ">
+                <FormField
+                  control={form.control}
+                  name="engineTemperature"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Engine Temperature </FormLabel>
+                      <FormControl>
+                        <Input
+                          type="text"
+                          placeholder="temperature"
+                          {...field}
+                          className="md:md:w-[300px] w-[200px] "
+                        />
+                      </FormControl>
+                      {/* <FormDescription>This is your email.</FormDescription> */}
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="engineSpeed"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Speed </FormLabel>
+                      <FormControl>
+                        <Input
+                          type="text"
+                          placeholder="tempearture"
+                          {...field}
+                          className="md:w-[300px] w-[200px]"
+                        />
+                      </FormControl>
+                      {/* <FormDescription>This is your email.</FormDescription> */}
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="oilPressure"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Oil Pressure </FormLabel>
+                      <FormControl>
+                        <Input
+                          type="text"
+                          placeholder="tempearture"
+                          {...field}
+                          className="md:w-[300px] w-[200px]"
+                        />
+                      </FormControl>
+                      {/* <FormDescription>This is your email.</FormDescription> */}
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
+            </div>
+            <div className="border-2 p-8 rounded-xl">
+              <span className=" text-xl underline decoration-yellow-400">
+                Fuel
+              </span>
+              <div className="flex justify-center">
+                <div className="w-[95%] grid md:grid-cols-2 place-items-center gap-4">
+                  <FormField
+                    control={form.control}
+                    name="WaterInFuel"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>WaterInFuel </FormLabel>
+                        <FormControl>
+                          <Input
+                            type="text"
+                            placeholder="WaterInFuel"
+                            {...field}
+                            className="md:w-[300px] w-[200px]"
+                          />
+                        </FormControl>
+                        {/* <FormDescription>This is your email.</FormDescription> */}
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name="fuelLevel"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Fuel Level </FormLabel>
+                        <FormControl>
+                          <Input
+                            type="text"
+                            placeholder="tempearture"
+                            {...field}
+                            className="md:w-[300px] w-[200px]"
+                          />
+                        </FormControl>
+                        {/* <FormDescription>This is your email.</FormDescription> */}
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name="fuelPressure"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Fuel Pressure </FormLabel>
+                        <FormControl>
+                          <Input
+                            type="text"
+                            placeholder="tempearture"
+                            {...field}
+                            className="md:w-[300px] w-[200px]"
+                          />
+                        </FormControl>
+                        {/* <FormDescription>This is your email.</FormDescription> */}
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name="fuelTemperature"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Fuel Temperature </FormLabel>
+                        <FormControl>
+                          <Input
+                            type="text"
+                            placeholder="tempearture"
+                            {...field}
+                            className="md:w-[300px] w-[200px]"
+                          />
+                        </FormControl>
+                        {/* <FormDescription>This is your email.</FormDescription> */}
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
+              </div>
+            </div>
+            <div className="border-2 p-8 rounded-xl">
+              <span className="text-xl underline decoration-yellow-400">
+                Drive
+              </span>
+              <div className="flex justify-center">
+                <div className="w-[95%] grid md:grid-cols-2 place-items-center gap-4">
+                  <FormField
+                    control={form.control}
+                    name="transmissionPressure"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Transmission Pressure </FormLabel>
+                        <FormControl>
+                          <Input
+                            type="text"
+                            placeholder="transmission pressure"
+                            {...field}
+                            className="md:w-[300px] w-[200px]"
+                          />
+                        </FormControl>
+                        {/* <FormDescription>This is your email.</FormDescription> */}
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name="brakeControl"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Brake Control </FormLabel>
+                        <FormControl>
+                          <Input
+                            type="text"
+                            placeholder="brake control"
+                            {...field}
+                            className="md:w-[300px] w-[200px]"
+                          />
+                        </FormControl>
+                        {/* <FormDescription>This is your email.</FormDescription> */}
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name="pedalSensor"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Pedal Sensor </FormLabel>
+                        <FormControl>
+                          <Input
+                            type="text"
+                            placeholder="pedal sensor"
+                            {...field}
+                            className="md:w-[300px] w-[200px]"
+                          />
+                        </FormControl>
+                        {/* <FormDescription>This is your email.</FormDescription> */}
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
+              </div>
+            </div>
+            <div className="border-2 p-8 rounded-xl">
+              <span className="text-xl underline decoration-yellow-400">
+                Misc
+              </span>
+              <div className="flex justify-center">
+                <div className="w-[95%] grid md:grid-cols-2 place-items-center gap-4">
+                  <FormField
+                    control={form.control}
+                    name="exhaustGasTemperature"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Exhaust Gas Temperature </FormLabel>
+                        <FormControl>
+                          <Input
+                            type="text"
+                            placeholder="exhaust gas temperature"
+                            {...field}
+                            className="md:w-[300px] w-[200px]"
+                          />
+                        </FormControl>
+                        {/* <FormDescription>This is your email.</FormDescription> */}
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name="airFilterPressure"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Air Filter Pressure </FormLabel>
+                        <FormControl>
+                          <Input
+                            type="text"
+                            placeholder="air filter pressure"
+                            {...field}
+                            className="md:w-[300px] w-[200px]"
+                          />
+                        </FormControl>
+                        {/* <FormDescription>This is your email.</FormDescription> */}
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name="systemVoltage"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Systeam Voltage </FormLabel>
+                        <FormControl>
+                          <Input
+                            type="text"
+                            placeholder="system voltage"
+                            {...field}
+                            className="md:w-[300px] w-[200px]"
+                          />
+                        </FormControl>
+                        {/* <FormDescription>This is your email.</FormDescription> */}
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name="hydraulicPumpRate"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Hydraulic Pump Rate </FormLabel>
+                        <FormControl>
+                          <Input
+                            type="text"
+                            placeholder="tempearture"
+                            {...field}
+                            className="md:w-[300px] w-[200px]"
+                          />
+                        </FormControl>
+                        {/* <FormDescription>This is your email.</FormDescription> */}
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
+              </div>
+            </div>
+            <div className="flex justify-center">
+              <Button type="submit" className="md:w-[300px] w-[200px] bg-yellow-400 text-yellow-600 font-bold hover:bg-yellow-300">
+                Generate Prediction
+              </Button>
+            </div>
+          </form>
+        </Form>
+      </div>
     </div>
   );
 };
-
-export default PredictForm;
