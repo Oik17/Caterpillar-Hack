@@ -1,8 +1,11 @@
 package services
 
 import (
+	"time"
+
 	"github.com/Oik17/Caterpillar-Hack/internal/database"
 	"github.com/Oik17/Caterpillar-Hack/internal/models"
+	"github.com/google/uuid"
 )
 
 func CreateProduct(input models.Product) error {
@@ -39,4 +42,13 @@ func GetAllProducts() ([]models.Product, error) {
 	}
 
 	return products, nil
+}
+
+func UpdateProductDate(date time.Time, id uuid.UUID) error {
+	db := database.DB.Db
+	_, err := db.Exec(`UPDATE products SET expected_failure_date= $1 WHERE id=$2`, date, id)
+	if err != nil {
+		return err
+	}
+	return nil
 }
