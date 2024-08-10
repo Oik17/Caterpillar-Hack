@@ -66,7 +66,7 @@ export default function ProfileForm() {
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(onSubmit)}
-            className="space-y-3 flex flex-col"
+            className="space-y-1 flex flex-col"
           >
             <FormField
               control={form.control}
@@ -77,7 +77,7 @@ export default function ProfileForm() {
                   <FormControl>
                     <Input placeholder="username" {...field} />
                   </FormControl>
-                  <FormDescription>This is your username.</FormDescription>
+                  {/* <FormDescription>This is your username.</FormDescription> */}
                   <FormMessage />
                 </FormItem>
               )}
@@ -91,7 +91,7 @@ export default function ProfileForm() {
                   <FormControl>
                     <Input placeholder="email" {...field} />
                   </FormControl>
-                  <FormDescription>This is your email.</FormDescription>
+                  {/* <FormDescription>This is your email.</FormDescription> */}
                   <FormMessage />
                 </FormItem>
               )}
@@ -105,7 +105,7 @@ export default function ProfileForm() {
                   <FormControl>
                     <Input type="password" placeholder="******" {...field} />
                   </FormControl>
-                  <FormDescription>This is your password.</FormDescription>
+                  {/* <FormDescription>This is your password.</FormDescription> */}
                   <FormMessage />
                 </FormItem>
               )}
@@ -119,7 +119,7 @@ export default function ProfileForm() {
                   <FormControl>
                     <Input type="password" placeholder="******" {...field} />
                   </FormControl>
-                  <FormDescription>Re-enter your password.</FormDescription>
+                  {/* <FormDescription>Re-enter your password.</FormDescription> */}
                   <FormMessage />
                 </FormItem>
               )}
