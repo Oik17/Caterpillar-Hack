@@ -1,0 +1,10 @@
+{
+    "services": {
+      "app": {
+        "docker": {
+          "dockerfile": "Dockerfile"
+        }
+      }
+    }
+  }
+  

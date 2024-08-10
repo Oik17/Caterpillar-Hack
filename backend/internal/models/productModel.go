@@ -7,28 +7,34 @@ import (
 	"github.com/google/uuid"
 )
 
+type SensorData struct {
+	Date   map[int]string  `json:"date"`
+	Time   map[int]string  `json:"time"`
+	Values map[int]float64 `json:"values"`
+}
+
 type Component struct {
 	Engine struct {
-		EngineTemperature float64 `json:"engineTemperature"`
-		EngineSpeed       float64 `json:"engineSpeed"`
-		OilPressure       float64 `json:"oilPressure"`
+		Temperature SensorData `json:"temperature"`
+		OilPressure SensorData `json:"oilPressure"`
+		Speed       SensorData `json:"speed"`
 	} `json:"engine"`
-	Fuel struct {
-		WaterInFuel     float64 `json:"WaterInFuel"`
-		FuelLevel       float64 `json:"fuelLevel"`
-		FuelPressure    float64 `json:"fuelPressure"`
-		FuelTemperature float64 `json:"fuelTemperature"`
-	} `json:"fuel"`
 	Drive struct {
-		TransmissionPressure float64 `json:"transmissionPressure"`
-		BrakeControl         float64 `json:"brakeControl"`
-		PedalSensor          float64 `json:"pedalSensor"`
+		BrakeControl         SensorData `json:"brakeControl"`
+		PedalSensor          SensorData `json:"pedalSensor"`
+		TransmissionPressure SensorData `json:"transmissionPressure"`
 	} `json:"drive"`
+	Fuel struct {
+		WaterInFuel SensorData `json:"waterInFuel"`
+		Pressure    SensorData `json:"pressure"`
+		Temperature SensorData `json:"temperature"`
+		Level       SensorData `json:"level"`
+	} `json:"fuel"`
 	Misc struct {
-		ExhaustGasTemperature float64 `json:"exhaustGasTemperature"`
-		AirFilterPressure     float64 `json:"airFilterPresure"`
-		SystemVoltage         float64 `json:"systemVoltage"`
-		HydraulicPumpRate     float64 `json:"hydraulicPumpRate"`
+		AirFilterPressure     SensorData `json:"airFilterPressure"`
+		SystemVoltage         SensorData `json:"systemVoltage"`
+		HydraulicPumpRate     SensorData `json:"hydraulicPumpRate"`
+		ExhaustGasTemperature SensorData `json:"exhaustGasTemperature"`
 	} `json:"misc"`
 }
 
@@ -41,5 +47,5 @@ type Product struct {
 	Components          Component      `json:"components"`
 	ExpectedFailureDate sql.NullTime   `json:"expected_failure_date"`
 	Data                sql.NullString `json:"data"`
-	Health_Card         sql.NullString `json:"health_card"`
+	HealthCard          sql.NullString `json:"health_card"`
 }

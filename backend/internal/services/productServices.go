@@ -24,7 +24,6 @@ func CreateProduct(input models.Product) error {
 	}
 	return nil
 }
-
 func GetAllProducts() ([]models.Product, error) {
 	db := database.DB.Db
 

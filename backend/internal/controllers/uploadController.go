@@ -72,7 +72,7 @@ func AddData(c echo.Context) error {
 			Bucket: aws.String(os.Getenv("AWS_S3_BUCKET")),
 			Key:    aws.String(filename),
 		})
-		urlStr, err := req.Presign(60 * 24 * time.Minute)
+		urlStr, err := req.Presign(7200 * time.Minute)
 		if err != nil {
 			return c.JSON(http.StatusInternalServerError, map[string]string{
 				"message": "Failed to generate pre-signed URL",
