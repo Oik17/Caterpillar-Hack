@@ -40,3 +40,24 @@ func CreateProduct1(c echo.Context) error {
 
 	return c.JSON(http.StatusOK, product)
 }
+
+func UpdateHealthScore(c echo.Context) error {
+	id := c.Param("id")
+	var healthscore struct {
+		HealthScore float64 `json:"health_score"`
+	}
+	if err := c.Bind(&healthscore); err != nil {
+		return c.JSON(http.StatusBadRequest, map[string]string{
+			"message": "Failed to bind input",
+			"data":    err.Error(),
+		})
+	}
+	err := services.UpdateHealthScore(id, healthscore.HealthScore)
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, map[string]string{
+			"message": "Failed to bind input",
+			"data":    err.Error(),
+		})
+	}
+	return c.JSON(http.StatusOK, healthscore)
+}

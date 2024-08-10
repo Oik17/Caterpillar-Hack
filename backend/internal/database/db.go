@@ -77,7 +77,7 @@ func runMigrations(db *sqlx.DB) {
 			machine VARCHAR(255),
 			components JSONB, -- Store components as JSON
 			expected_failure_date DATE,
-			health_score INTEGER
+			health_score FLOAT
 		);
 	`)
 
