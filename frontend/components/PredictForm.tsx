@@ -24,8 +24,23 @@ import { useState } from "react";
 type Props = {};
 
 const formSchema = z.object({
-  email: z.string().email("Invalid email format"),
-  password: z.string().min(8, "Password must contain minimum 8 characters"),
+  machine: z.string().min(1, "Please select a machine"),
+  engineTemperature: z.string().min(1, "Temperature is required"),
+  engineSpeed: z.string().min(1, "Engine Speed is required"),
+  oilPressure: z.string().min(1, "oilPressure is required"),
+  fuelTemperature: z.string().min(1, "Fuel Temperature is required"),
+  fuelLevel: z.string().min(1, "Fuel Level is required"),
+  WaterInFuel: z.string().min(1, "WaterInFuel is required"),
+  fuelPressure: z.string().min(1, "Fuel Pressure is required"),
+  transmissionPressure: z.string().min(1, "Transmission pressure is required"),
+  brakeControl: z.string().min(1, "Brake control is required"),
+  pedalSensor: z.string().min(1, "Pedal sensor is required"),
+  exhaustGasTemperature: z
+    .string()
+    .min(1, "Exhaust gas temperature is required"),
+  airFilterPressure: z.string().min(1, "Air filter pressure is required"),
+  systemVoltage: z.string().min(1, "System voltage is required"),
+  hydraulicPumpRate: z.string().min(1, "Hydraulic pump rate is required"),
 });
 
 export const PredictForm = ({}: Props) => {
@@ -40,23 +55,39 @@ export const PredictForm = ({}: Props) => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      email: "",
-      password: "",
+      machine: "",
+      engineTemperature: "",
+      engineSpeed: "",
+      oilPressure: "",
+      fuelTemperature: "",
+      fuelLevel: "",
+      WaterInFuel: "",
+      fuelPressure: "",
+      transmissionPressure: "",
+      brakeControl: "",
+      pedalSensor: "",
+      exhaustGasTemperature: "",
+      airFilterPressure: "",
+      systemVoltage: "",
+      hydraulicPumpRate: "",
     },
   });
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     try {
-      console.log("Predict");
+      console.log(values);
+      toast.success("Form submitted successfully!");
     } catch (error: AxiosError | any) {
-      console.log("erroor");
+      console.error("Error:", error);
+      toast.error("Failed to submit form.");
     }
   }
   return (
-    <div className="w-full min-w-[300px] flex justify-center">
+    <div className="w-full   flex justify-center">
       {/* <span className="text-2xl bg-yellow-300 p-2 rounded-md w-full">
         Machine
       </span> */}
+      <Toaster position="top-center" richColors/>
       <div className="w-[80%]">
         <Form {...form}>
           <form
@@ -65,14 +96,17 @@ export const PredictForm = ({}: Props) => {
           >
             <FormField
               control={form.control}
-              name="email"
+              name="machine"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Machine: </FormLabel>
                   <FormControl>
-                    <DropdownMenuRadioGroupDemo
-                      onDataReceive={handleDataFromChild}
-                    />
+                    <Input
+                          type="text"
+                          placeholder="machine"
+                          {...field}
+                          className="md:md:w-[300px] w-[200px] "
+                        />
                   </FormControl>
                   {/* <FormDescription>This is your email.</FormDescription> */}
                   <FormMessage />
@@ -83,22 +117,22 @@ export const PredictForm = ({}: Props) => {
               Components
             </span>
             <div className="border-2 p-8 rounded-xl">
-              <span className="text-xl underline decoration-yellow-400 ml-10">
+              <span className="text-xl underline decoration-yellow-400">
                 Engine
               </span>
-              <div className="grid md:grid-cols-2  place-items-center ">
+              <div className="grid md:grid-cols-2 md:place-items-center ">
                 <FormField
                   control={form.control}
-                  name="email"
+                  name="engineTemperature"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Temperature </FormLabel>
+                      <FormLabel>Engine Temperature </FormLabel>
                       <FormControl>
                         <Input
-                          type="password"
-                          placeholder="tempearture"
+                          type="text"
+                          placeholder="temperature"
                           {...field}
-                          className="w-[300px]"
+                          className="md:md:w-[300px] w-[200px] "
                         />
                       </FormControl>
                       {/* <FormDescription>This is your email.</FormDescription> */}
@@ -108,16 +142,16 @@ export const PredictForm = ({}: Props) => {
                 />
                 <FormField
                   control={form.control}
-                  name="email"
+                  name="engineSpeed"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Temperature </FormLabel>
+                      <FormLabel>Speed </FormLabel>
                       <FormControl>
                         <Input
-                          type="password"
+                          type="text"
                           placeholder="tempearture"
                           {...field}
-                          className="w-[300px]"
+                          className="md:w-[300px] w-[200px]"
                         />
                       </FormControl>
                       {/* <FormDescription>This is your email.</FormDescription> */}
@@ -127,16 +161,16 @@ export const PredictForm = ({}: Props) => {
                 />
                 <FormField
                   control={form.control}
-                  name="email"
+                  name="oilPressure"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Temperature </FormLabel>
+                      <FormLabel>Oil Pressure </FormLabel>
                       <FormControl>
                         <Input
-                          type="password"
+                          type="text"
                           placeholder="tempearture"
                           {...field}
-                          className="w-[300px]"
+                          className="md:w-[300px] w-[200px]"
                         />
                       </FormControl>
                       {/* <FormDescription>This is your email.</FormDescription> */}
@@ -154,16 +188,16 @@ export const PredictForm = ({}: Props) => {
                 <div className="w-[95%] grid md:grid-cols-2 place-items-center gap-4">
                   <FormField
                     control={form.control}
-                    name="email"
+                    name="WaterInFuel"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Temperature </FormLabel>
+                        <FormLabel>WaterInFuel </FormLabel>
                         <FormControl>
                           <Input
-                            type="password"
-                            placeholder="tempearture"
+                            type="text"
+                            placeholder="WaterInFuel"
                             {...field}
-                            className="w-[300px]"
+                            className="md:w-[300px] w-[200px]"
                           />
                         </FormControl>
                         {/* <FormDescription>This is your email.</FormDescription> */}
@@ -173,16 +207,16 @@ export const PredictForm = ({}: Props) => {
                   />
                   <FormField
                     control={form.control}
-                    name="email"
+                    name="fuelLevel"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Temperature </FormLabel>
+                        <FormLabel>Fuel Level </FormLabel>
                         <FormControl>
                           <Input
-                            type="password"
+                            type="text"
                             placeholder="tempearture"
                             {...field}
-                            className="w-[300px]"
+                            className="md:w-[300px] w-[200px]"
                           />
                         </FormControl>
                         {/* <FormDescription>This is your email.</FormDescription> */}
@@ -192,16 +226,16 @@ export const PredictForm = ({}: Props) => {
                   />
                   <FormField
                     control={form.control}
-                    name="email"
+                    name="fuelPressure"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Temperature </FormLabel>
+                        <FormLabel>Fuel Pressure </FormLabel>
                         <FormControl>
                           <Input
-                            type="password"
+                            type="text"
                             placeholder="tempearture"
                             {...field}
-                            className="w-[300px]"
+                            className="md:w-[300px] w-[200px]"
                           />
                         </FormControl>
                         {/* <FormDescription>This is your email.</FormDescription> */}
@@ -211,16 +245,16 @@ export const PredictForm = ({}: Props) => {
                   />
                   <FormField
                     control={form.control}
-                    name="email"
+                    name="fuelTemperature"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Temperature </FormLabel>
+                        <FormLabel>Fuel Temperature </FormLabel>
                         <FormControl>
                           <Input
-                            type="password"
+                            type="text"
                             placeholder="tempearture"
                             {...field}
-                            className="w-[300px]"
+                            className="md:w-[300px] w-[200px]"
                           />
                         </FormControl>
                         {/* <FormDescription>This is your email.</FormDescription> */}
@@ -239,16 +273,16 @@ export const PredictForm = ({}: Props) => {
                 <div className="w-[95%] grid md:grid-cols-2 place-items-center gap-4">
                   <FormField
                     control={form.control}
-                    name="email"
+                    name="transmissionPressure"
                     render={({ field }) => (
                       <FormItem>
                         <FormLabel>Transmission Pressure </FormLabel>
                         <FormControl>
                           <Input
-                            type="password"
+                            type="text"
                             placeholder="transmission pressure"
                             {...field}
-                            className="w-[300px]"
+                            className="md:w-[300px] w-[200px]"
                           />
                         </FormControl>
                         {/* <FormDescription>This is your email.</FormDescription> */}
@@ -258,16 +292,16 @@ export const PredictForm = ({}: Props) => {
                   />
                   <FormField
                     control={form.control}
-                    name="email"
+                    name="brakeControl"
                     render={({ field }) => (
                       <FormItem>
                         <FormLabel>Brake Control </FormLabel>
                         <FormControl>
                           <Input
-                            type="password"
+                            type="text"
                             placeholder="brake control"
                             {...field}
-                            className="w-[300px]"
+                            className="md:w-[300px] w-[200px]"
                           />
                         </FormControl>
                         {/* <FormDescription>This is your email.</FormDescription> */}
@@ -277,16 +311,16 @@ export const PredictForm = ({}: Props) => {
                   />
                   <FormField
                     control={form.control}
-                    name="email"
+                    name="pedalSensor"
                     render={({ field }) => (
                       <FormItem>
                         <FormLabel>Pedal Sensor </FormLabel>
                         <FormControl>
                           <Input
-                            type="password"
+                            type="text"
                             placeholder="pedal sensor"
                             {...field}
-                            className="w-[300px]"
+                            className="md:w-[300px] w-[200px]"
                           />
                         </FormControl>
                         {/* <FormDescription>This is your email.</FormDescription> */}
@@ -305,16 +339,16 @@ export const PredictForm = ({}: Props) => {
                 <div className="w-[95%] grid md:grid-cols-2 place-items-center gap-4">
                   <FormField
                     control={form.control}
-                    name="email"
+                    name="exhaustGasTemperature"
                     render={({ field }) => (
                       <FormItem>
                         <FormLabel>Exhaust Gas Temperature </FormLabel>
                         <FormControl>
                           <Input
-                            type="password"
+                            type="text"
                             placeholder="exhaust gas temperature"
                             {...field}
-                            className="w-[300px]"
+                            className="md:w-[300px] w-[200px]"
                           />
                         </FormControl>
                         {/* <FormDescription>This is your email.</FormDescription> */}
@@ -324,16 +358,16 @@ export const PredictForm = ({}: Props) => {
                   />
                   <FormField
                     control={form.control}
-                    name="email"
+                    name="airFilterPressure"
                     render={({ field }) => (
                       <FormItem>
                         <FormLabel>Air Filter Pressure </FormLabel>
                         <FormControl>
                           <Input
-                            type="password"
+                            type="text"
                             placeholder="air filter pressure"
                             {...field}
-                            className="w-[300px]"
+                            className="md:w-[300px] w-[200px]"
                           />
                         </FormControl>
                         {/* <FormDescription>This is your email.</FormDescription> */}
@@ -343,16 +377,16 @@ export const PredictForm = ({}: Props) => {
                   />
                   <FormField
                     control={form.control}
-                    name="email"
+                    name="systemVoltage"
                     render={({ field }) => (
                       <FormItem>
                         <FormLabel>Systeam Voltage </FormLabel>
                         <FormControl>
                           <Input
-                            type="password"
+                            type="text"
                             placeholder="system voltage"
                             {...field}
-                            className="w-[300px]"
+                            className="md:w-[300px] w-[200px]"
                           />
                         </FormControl>
                         {/* <FormDescription>This is your email.</FormDescription> */}
@@ -362,16 +396,16 @@ export const PredictForm = ({}: Props) => {
                   />
                   <FormField
                     control={form.control}
-                    name="email"
+                    name="hydraulicPumpRate"
                     render={({ field }) => (
                       <FormItem>
                         <FormLabel>Hydraulic Pump Rate </FormLabel>
                         <FormControl>
                           <Input
-                            type="password"
+                            type="text"
                             placeholder="tempearture"
                             {...field}
-                            className="w-[300px]"
+                            className="md:w-[300px] w-[200px]"
                           />
                         </FormControl>
                         {/* <FormDescription>This is your email.</FormDescription> */}
@@ -383,7 +417,7 @@ export const PredictForm = ({}: Props) => {
               </div>
             </div>
             <div className="flex justify-center">
-              <Button type="submit" className="w-[300px]">
+              <Button type="submit" className="md:w-[300px] w-[200px]">
                 Generate Prediction
               </Button>
             </div>
