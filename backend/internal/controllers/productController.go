@@ -12,8 +12,9 @@ import (
 
 func CreateProduct(c echo.Context) error {
 	var input struct {
-		Machine    string `json:"machine"`
-		Components struct {
+		Machine     string `json:"machine"`
+		VehicleName string `json:"vehicle_name"`
+		Components  struct {
 			Engine struct {
 				EngineTemperature float64 `json:"engineTemperature"`
 				EngineSpeed       float64 `json:"engineSpeed"`

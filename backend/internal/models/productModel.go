@@ -36,6 +36,7 @@ type Product struct {
 	ID                  uuid.UUID      `json:"id"`
 	UserID              uuid.UUID      `json:"user_id"`
 	Time                time.Time      `json:"time"`
+	VehicleName         string         `json:"vehicle_name"`
 	Machine             string         `json:"machine"`
 	Components          Component      `json:"components"`
 	ExpectedFailureDate sql.NullTime   `json:"expected_failure_date"`
