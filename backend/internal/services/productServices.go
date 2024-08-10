@@ -1,6 +1,7 @@
 package services
 
 import (
+	"encoding/json"
 	"time"
 
 	"github.com/Oik17/Caterpillar-Hack/internal/database"
@@ -10,7 +11,14 @@ import (
 
 func CreateProduct(input models.Product) error {
 	db := database.DB.Db
-	_, err := db.Exec(`INSERT INTO products (id, user_id, time, machine, component, parameter, value) VALUES ($1, $2, $3, $4, $5, $6, $7)`, input.ID, input.UserID, input.Time, input.Machine, input.Component, input.Parameter, input.Value)
+	componentsJSON, err := json.Marshal(input.Components)
+	if err != nil {
+		return err
+	}
+
+	_, err = db.Exec(`INSERT INTO products (id, user_id, time, machine, components, expected_failure_date) VALUES ($1, $2, $3, $4, $5, $6)`,
+		input.ID, input.UserID, time.Now(), input.Machine, componentsJSON, input.ExpectedFailureDate)
+
 	if err != nil {
 		return err
 	}
@@ -20,7 +28,7 @@ func CreateProduct(input models.Product) error {
 func GetAllProducts() ([]models.Product, error) {
 	db := database.DB.Db
 
-	rows, err := db.Query(`SELECT id, time, machine, component, parameter, value FROM products`)
+	rows, err := db.Query(`SELECT id, user_id, time, machine, components, expected_failure_date FROM products`)
 	if err != nil {
 		return nil, err
 	}
@@ -30,10 +38,18 @@ func GetAllProducts() ([]models.Product, error) {
 
 	for rows.Next() {
 		var product models.Product
-		err := rows.Scan(&product.ID, &product.Time, &product.Machine, &product.Component, &product.Parameter, &product.Value)
+		var componentsJSON []byte
+
+		err := rows.Scan(&product.ID, &product.UserID, &product.Time, &product.Machine, &componentsJSON, &product.ExpectedFailureDate)
 		if err != nil {
 			return nil, err
 		}
+
+		err = json.Unmarshal(componentsJSON, &product.Components)
+		if err != nil {
+			return nil, err
+		}
+
 		products = append(products, product)
 	}
 

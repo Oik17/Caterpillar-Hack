@@ -57,15 +57,13 @@ func runMigrations(db *sqlx.DB) {
 			password VARCHAR(255) NOT NULL
 		);
 
-		CREATE TABLE IF NOT EXISTS products(
+		CREATE TABLE IF NOT EXISTS products (
 			id UUID PRIMARY KEY,
-			user_id UUID REFERENCES "users"(id),
+			user_id UUID REFERENCES users(id),
 			time TIMESTAMP,
 			machine VARCHAR(255),
-			component VARCHAR(255),
-			parameter VARCHAR(255),
-			value VARCHAR(255),
-			expected_failure_date DATE 
+			components JSONB, -- Store components as JSON
+			expected_failure_date DATE
 		);
 	`)
 
