@@ -13,4 +13,5 @@ func ProductRoutes(e *echo.Echo) {
 
 	r.POST("/create", controllers.CreateProduct, echojwt.JWT(controllers.JWTSecret), middleWare.Protected)
 	r.GET("/getAll", controllers.GetAllProduct)
+	r.POST("/updateData", controllers.UpdateProduct)
 }

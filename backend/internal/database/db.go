@@ -64,7 +64,8 @@ func runMigrations(db *sqlx.DB) {
 			machine VARCHAR(255),
 			component VARCHAR(255),
 			parameter VARCHAR(255),
-			value VARCHAR(255)
+			value VARCHAR(255),
+			expected_failure_date DATE 
 		);
 	`)
 

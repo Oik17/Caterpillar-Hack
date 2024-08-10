@@ -5,7 +5,6 @@ import (
 
 	"github.com/Oik17/Caterpillar-Hack/internal/controllers"
 	"github.com/Oik17/Caterpillar-Hack/internal/database"
-	middleWare "github.com/Oik17/Caterpillar-Hack/internal/middleware"
 	"github.com/Oik17/Caterpillar-Hack/internal/routes"
 	"github.com/Oik17/Caterpillar-Hack/internal/utils"
 
@@ -34,7 +33,7 @@ func main() {
 		return c.JSON(http.StatusOK, map[string]string{
 			"message": "pong",
 		})
-	}, echojwt.JWT(controllers.JWTSecret), middleWare.Protected)
+	})
 
 	e.Logger.Fatal(e.Start(":" + utils.Config("PORT")))
 }
