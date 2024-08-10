@@ -7,7 +7,7 @@ const Predict = () => {
       <div className="'h-20 w-full">
         <Navigation page={"predict"} />
       </div>
-      <div className="overflow-y-auto w-full">
+      <div className="overflow-y-auto w-full scrollbar">
         <PredictForm />
       </div>
     </div>
