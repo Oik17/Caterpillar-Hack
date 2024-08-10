@@ -74,14 +74,56 @@ export const PredictForm = ({}: Props) => {
   });
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    try {
-      console.log(values);
-      toast.success("Form submitted successfully!");
-    } catch (error: AxiosError | any) {
-      console.error("Error:", error);
-      toast.error("Failed to submit form.");
-    }
+  try {
+  
+    const data = {
+      machine: values.machine,
+      components: {
+        engine: {
+          engineTemperature: Number(values.engineTemperature),
+          engineSpeed: Number(values.engineSpeed),
+          oilPressure: Number(values.oilPressure),
+        },
+        fuel: {
+          WaterInFuel: Number(values.WaterInFuel),
+          fuelLevel: Number(values.fuelLevel),
+          fuelPressure: Number(values.fuelPressure),
+          fuelTemperature: Number(values.fuelTemperature),
+        },
+        drive: {
+          transmissionPressure: Number(values.transmissionPressure),
+          brakeControl: Number(values.brakeControl),
+          pedalSensor: Number(values.pedalSensor),
+        },
+        misc: {
+          exhaustGasTemperature: Number(values.exhaustGasTemperature),
+          airFilterPressure: Number(values.airFilterPressure),
+          systemVoltage: Number(values.systemVoltage),
+          hydraulicPumpRate: Number(values.hydraulicPumpRate),
+        },
+      },
+    };
+    console.log(data)
+
+    
+    const token = localStorage.getItem("Auth");
+
+    const response = await axios.post("http://localhost:8080/products/create", data, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+    });
+
+    console.log("Request successful:", response.data);
+    toast.success(response.data.message);
+    router.push("/dashboard");
+  } catch (error: AxiosError | any) {
+    console.error("Request failed:", error);
+    toast.error(error.message);
   }
+}
+
   return (
     <div className="w-full   flex justify-center">
       {/* <span className="text-2xl bg-yellow-300 p-2 rounded-md w-full">
