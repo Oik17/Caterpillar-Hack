@@ -53,203 +53,343 @@ export const PredictForm = ({}: Props) => {
     }
   }
   return (
-    <div className="w-[800px] min-w-[200px]">
-      <Form {...form}>
-        <form
-          onSubmit={form.handleSubmit(onSubmit)}
-          className="space-y-3 flex flex-col"
-        >
-          <FormField
-            control={form.control}
-            name="email"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Machine: </FormLabel>
-                <FormControl>
-                  <DropdownMenuRadioGroupDemo
-                    onDataReceive={handleDataFromChild}
+    <div className="w-full min-w-[300px] flex justify-center">
+      {/* <span className="text-2xl bg-yellow-300 p-2 rounded-md w-full">
+        Machine
+      </span> */}
+      <div className="w-[80%]">
+        <Form {...form}>
+          <form
+            onSubmit={form.handleSubmit(onSubmit)}
+            className="space-y-3 flex flex-col"
+          >
+            <FormField
+              control={form.control}
+              name="email"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Machine: </FormLabel>
+                  <FormControl>
+                    <DropdownMenuRadioGroupDemo
+                      onDataReceive={handleDataFromChild}
+                    />
+                  </FormControl>
+                  {/* <FormDescription>This is your email.</FormDescription> */}
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <span className="text-2xl bg-yellow-300 p-2 rounded-md">
+              Components
+            </span>
+            <div className="border-2 p-8 rounded-xl">
+              <span className="text-xl underline decoration-yellow-400 ml-10">
+                Engine
+              </span>
+              <div className="grid md:grid-cols-2  place-items-center ">
+                <FormField
+                  control={form.control}
+                  name="email"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Temperature </FormLabel>
+                      <FormControl>
+                        <Input
+                          type="password"
+                          placeholder="tempearture"
+                          {...field}
+                          className="w-[300px]"
+                        />
+                      </FormControl>
+                      {/* <FormDescription>This is your email.</FormDescription> */}
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="email"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Temperature </FormLabel>
+                      <FormControl>
+                        <Input
+                          type="password"
+                          placeholder="tempearture"
+                          {...field}
+                          className="w-[300px]"
+                        />
+                      </FormControl>
+                      {/* <FormDescription>This is your email.</FormDescription> */}
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="email"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Temperature </FormLabel>
+                      <FormControl>
+                        <Input
+                          type="password"
+                          placeholder="tempearture"
+                          {...field}
+                          className="w-[300px]"
+                        />
+                      </FormControl>
+                      {/* <FormDescription>This is your email.</FormDescription> */}
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
+            </div>
+            <div className="border-2 p-8 rounded-xl">
+              <span className=" text-xl underline decoration-yellow-400">
+                Fuel
+              </span>
+              <div className="flex justify-center">
+                <div className="w-[95%] grid md:grid-cols-2 place-items-center gap-4">
+                  <FormField
+                    control={form.control}
+                    name="email"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Temperature </FormLabel>
+                        <FormControl>
+                          <Input
+                            type="password"
+                            placeholder="tempearture"
+                            {...field}
+                            className="w-[300px]"
+                          />
+                        </FormControl>
+                        {/* <FormDescription>This is your email.</FormDescription> */}
+                        <FormMessage />
+                      </FormItem>
+                    )}
                   />
-                </FormControl>
-                {/* <FormDescription>This is your email.</FormDescription> */}
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <span className="text-2xl bg-yellow-300 p-2 rounded-md">
-            Components
-          </span>
-          <div className="flex flex-col gap-4">
-            <span className="text-xl underline decoration-yellow-400">
-              Engine
-            </span>
-            <div className="grid grid-cols-2">
-              <FormField
-                control={form.control}
-                name="email"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Temperature </FormLabel>
-                    <FormControl>
-                      <Input
-                        type="password"
-                        placeholder="tempearture"
-                        {...field}
-                        className="w-[200px]"
-                      />
-                    </FormControl>
-                    {/* <FormDescription>This is your email.</FormDescription> */}
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="email"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Temperature </FormLabel>
-                    <FormControl>
-                      <Input
-                        type="password"
-                        placeholder="tempearture"
-                        {...field}
-                        className="w-[200px]"
-                      />
-                    </FormControl>
-                    {/* <FormDescription>This is your email.</FormDescription> */}
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="email"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Temperature </FormLabel>
-                    <FormControl>
-                      <Input
-                        type="password"
-                        placeholder="tempearture"
-                        {...field}
-                        className="w-[200px]"
-                      />
-                    </FormControl>
-                    {/* <FormDescription>This is your email.</FormDescription> */}
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="email"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Temperature </FormLabel>
-                    <FormControl>
-                      <Input
-                        type="password"
-                        placeholder="tempearture"
-                        {...field}
-                        className="w-[200px]"
-                      />
-                    </FormControl>
-                    {/* <FormDescription>This is your email.</FormDescription> */}
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
+                  <FormField
+                    control={form.control}
+                    name="email"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Temperature </FormLabel>
+                        <FormControl>
+                          <Input
+                            type="password"
+                            placeholder="tempearture"
+                            {...field}
+                            className="w-[300px]"
+                          />
+                        </FormControl>
+                        {/* <FormDescription>This is your email.</FormDescription> */}
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name="email"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Temperature </FormLabel>
+                        <FormControl>
+                          <Input
+                            type="password"
+                            placeholder="tempearture"
+                            {...field}
+                            className="w-[300px]"
+                          />
+                        </FormControl>
+                        {/* <FormDescription>This is your email.</FormDescription> */}
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name="email"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Temperature </FormLabel>
+                        <FormControl>
+                          <Input
+                            type="password"
+                            placeholder="tempearture"
+                            {...field}
+                            className="w-[300px]"
+                          />
+                        </FormControl>
+                        {/* <FormDescription>This is your email.</FormDescription> */}
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
+              </div>
             </div>
-          </div>
-          <div className="flex flex-col gap-4">
-            <span className="text-xl underline decoration-yellow-400">
-              Fuel
-            </span>
-            <div className="grid grid-cols-2">
-              <FormField
-                control={form.control}
-                name="email"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Temperature </FormLabel>
-                    <FormControl>
-                      <Input
-                        type="password"
-                        placeholder="tempearture"
-                        {...field}
-                        className="w-[200px]"
-                      />
-                    </FormControl>
-                    {/* <FormDescription>This is your email.</FormDescription> */}
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="email"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Temperature </FormLabel>
-                    <FormControl>
-                      <Input
-                        type="password"
-                        placeholder="tempearture"
-                        {...field}
-                        className="w-[200px]"
-                      />
-                    </FormControl>
-                    {/* <FormDescription>This is your email.</FormDescription> */}
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="email"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Temperature </FormLabel>
-                    <FormControl>
-                      <Input
-                        type="password"
-                        placeholder="tempearture"
-                        {...field}
-                        className="w-[200px]"
-                      />
-                    </FormControl>
-                    {/* <FormDescription>This is your email.</FormDescription> */}
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="email"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Temperature </FormLabel>
-                    <FormControl>
-                      <Input
-                        type="password"
-                        placeholder="tempearture"
-                        {...field}
-                        className="w-[200px]"
-                      />
-                    </FormControl>
-                    {/* <FormDescription>This is your email.</FormDescription> */}
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
+            <div className="border-2 p-8 rounded-xl">
+              <span className="text-xl underline decoration-yellow-400">
+                Drive
+              </span>
+              <div className="flex justify-center">
+                <div className="w-[95%] grid md:grid-cols-2 place-items-center gap-4">
+                  <FormField
+                    control={form.control}
+                    name="email"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Transmission Pressure </FormLabel>
+                        <FormControl>
+                          <Input
+                            type="password"
+                            placeholder="transmission pressure"
+                            {...field}
+                            className="w-[300px]"
+                          />
+                        </FormControl>
+                        {/* <FormDescription>This is your email.</FormDescription> */}
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name="email"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Brake Control </FormLabel>
+                        <FormControl>
+                          <Input
+                            type="password"
+                            placeholder="brake control"
+                            {...field}
+                            className="w-[300px]"
+                          />
+                        </FormControl>
+                        {/* <FormDescription>This is your email.</FormDescription> */}
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name="email"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Pedal Sensor </FormLabel>
+                        <FormControl>
+                          <Input
+                            type="password"
+                            placeholder="pedal sensor"
+                            {...field}
+                            className="w-[300px]"
+                          />
+                        </FormControl>
+                        {/* <FormDescription>This is your email.</FormDescription> */}
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
+              </div>
             </div>
-          </div>
-
-          <Button type="submit" className="w-full">
-            Generate Prediction
-          </Button>
-        </form>
-      </Form>
+            <div className="border-2 p-8 rounded-xl">
+              <span className="text-xl underline decoration-yellow-400">
+                Misc
+              </span>
+              <div className="flex justify-center">
+                <div className="w-[95%] grid md:grid-cols-2 place-items-center gap-4">
+                  <FormField
+                    control={form.control}
+                    name="email"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Exhaust Gas Temperature </FormLabel>
+                        <FormControl>
+                          <Input
+                            type="password"
+                            placeholder="exhaust gas temperature"
+                            {...field}
+                            className="w-[300px]"
+                          />
+                        </FormControl>
+                        {/* <FormDescription>This is your email.</FormDescription> */}
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name="email"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Air Filter Pressure </FormLabel>
+                        <FormControl>
+                          <Input
+                            type="password"
+                            placeholder="air filter pressure"
+                            {...field}
+                            className="w-[300px]"
+                          />
+                        </FormControl>
+                        {/* <FormDescription>This is your email.</FormDescription> */}
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name="email"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Systeam Voltage </FormLabel>
+                        <FormControl>
+                          <Input
+                            type="password"
+                            placeholder="system voltage"
+                            {...field}
+                            className="w-[300px]"
+                          />
+                        </FormControl>
+                        {/* <FormDescription>This is your email.</FormDescription> */}
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name="email"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Hydraulic Pump Rate </FormLabel>
+                        <FormControl>
+                          <Input
+                            type="password"
+                            placeholder="tempearture"
+                            {...field}
+                            className="w-[300px]"
+                          />
+                        </FormControl>
+                        {/* <FormDescription>This is your email.</FormDescription> */}
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
+              </div>
+            </div>
+            <div className="flex justify-center">
+              <Button type="submit" className="w-[300px]">
+                Generate Prediction
+              </Button>
+            </div>
+          </form>
+        </Form>
+      </div>
     </div>
   );
 };
