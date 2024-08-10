@@ -52,7 +52,7 @@ func CreateProduct(c echo.Context) error {
 	product.ID = uuid.New()
 	product.Machine = input.Machine
 	product.Components = input.Components
-
+	product.VehicleName = input.VehicleName
 	userID := c.Get("user_id").(uuid.UUID)
 	product.UserID = userID
 
