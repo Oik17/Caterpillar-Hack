@@ -63,7 +63,9 @@ func runMigrations(db *sqlx.DB) {
 			time TIMESTAMP,
 			machine VARCHAR(255),
 			components JSONB, -- Store components as JSON
-			expected_failure_date DATE
+			expected_failure_date DATE,
+			data TEXT,
+			health_card TEXT
 		);
 	`)
 
