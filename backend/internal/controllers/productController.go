@@ -12,8 +12,9 @@ import (
 
 func CreateProduct(c echo.Context) error {
 	var input struct {
-		Machine    string `json:"machine"`
-		Components struct {
+		Machine     string `json:"machine"`
+		VehicleName string `json:"vehicle_name"`
+		Components  struct {
 			Engine struct {
 				EngineTemperature float64 `json:"engineTemperature"`
 				EngineSpeed       float64 `json:"engineSpeed"`
@@ -64,6 +65,20 @@ func CreateProduct(c echo.Context) error {
 	}
 
 	return c.JSON(http.StatusOK, product)
+}
+
+func GetProductsOfUser(c echo.Context) error {
+
+	userID := c.Get("user_id").(uuid.UUID)
+	products, err := services.GetProductsByUserID(userID)
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, map[string]string{
+			"message": "Failed to fetch products",
+			"data":    err.Error(),
+		})
+	}
+	return c.JSON(http.StatusOK, products)
+
 }
 
 func GetAllProduct(c echo.Context) error {

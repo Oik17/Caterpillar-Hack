@@ -16,8 +16,8 @@ func CreateProduct(input models.Product) error {
 		return err
 	}
 
-	_, err = db.Exec(`INSERT INTO products (id, user_id, time, machine, components, expected_failure_date) VALUES ($1, $2, $3, $4, $5, $6)`,
-		input.ID, input.UserID, time.Now(), input.Machine, componentsJSON, input.ExpectedFailureDate)
+	_, err = db.Exec(`INSERT INTO products (id, user_id, time, vehicle_name, machine, components, expected_failure_date) VALUES ($1, $2, $3, $4, $5, $6, $7)`,
+		input.ID, input.UserID, time.Now(), input.VehicleName, input.Machine, componentsJSON, input.ExpectedFailureDate)
 
 	if err != nil {
 		return err
@@ -28,7 +28,7 @@ func CreateProduct(input models.Product) error {
 func GetAllProducts() ([]models.Product, error) {
 	db := database.DB.Db
 
-	rows, err := db.Query(`SELECT id, user_id, time, machine, components, expected_failure_date FROM products`)
+	rows, err := db.Query(`SELECT id, user_id, time, vehicle_name, machine, components, expected_failure_date FROM products`)
 	if err != nil {
 		return nil, err
 	}
@@ -40,7 +40,7 @@ func GetAllProducts() ([]models.Product, error) {
 		var product models.Product
 		var componentsJSON []byte
 
-		err := rows.Scan(&product.ID, &product.UserID, &product.Time, &product.Machine, &componentsJSON, &product.ExpectedFailureDate)
+		err := rows.Scan(&product.ID, &product.UserID, &product.Time, &product.VehicleName, &product.Machine, &componentsJSON, &product.ExpectedFailureDate)
 		if err != nil {
 			return nil, err
 		}
@@ -63,7 +63,7 @@ func GetAllProducts() ([]models.Product, error) {
 func GetProductByMachine(machine string) ([]models.Product, error) {
 	db := database.DB.Db
 
-	rows, err := db.Query(`SELECT id, user_id, time, machine, components, expected_failure_date FROM products WHERE machine=$1`, machine)
+	rows, err := db.Query(`SELECT id, user_id, time, vehicle_name, machine, components, expected_failure_date FROM products WHERE machine=$1`, machine)
 	if err != nil {
 		return nil, err
 	}
@@ -75,7 +75,43 @@ func GetProductByMachine(machine string) ([]models.Product, error) {
 		var product models.Product
 		var componentsJSON []byte
 
-		err := rows.Scan(&product.ID, &product.UserID, &product.Time, &product.Machine, &componentsJSON, &product.ExpectedFailureDate)
+		err := rows.Scan(&product.ID, &product.UserID, &product.Time, &product.VehicleName, &product.Machine, &componentsJSON, &product.ExpectedFailureDate)
+		if err != nil {
+			return nil, err
+		}
+
+		err = json.Unmarshal(componentsJSON, &product.Components)
+		if err != nil {
+			return nil, err
+		}
+
+		products = append(products, product)
+	}
+
+	if err = rows.Err(); err != nil {
+		return nil, err
+	}
+
+	return products, nil
+
+}
+
+func GetProductsByUserID(id uuid.UUID) ([]models.Product, error) {
+	db := database.DB.Db
+
+	rows, err := db.Query(`SELECT id, user_id, time, vehicle_name, machine, components, expected_failure_date FROM products WHERE user_id=$1`, id)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+
+	var products []models.Product
+
+	for rows.Next() {
+		var product models.Product
+		var componentsJSON []byte
+
+		err := rows.Scan(&product.ID, &product.UserID, &product.Time, &product.VehicleName, &product.Machine, &componentsJSON, &product.ExpectedFailureDate)
 		if err != nil {
 			return nil, err
 		}

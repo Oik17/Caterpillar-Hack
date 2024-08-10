@@ -5,6 +5,7 @@ import (
 	"os"
 	"time"
 
+	"github.com/Oik17/Caterpillar-Hack/internal/database"
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/credentials"
 	"github.com/aws/aws-sdk-go/aws/session"
@@ -13,7 +14,9 @@ import (
 	"github.com/labstack/echo/v4"
 )
 
-func UploadFilesToS3(c echo.Context) error {
+func AddData(c echo.Context) error {
+	db := database.DB.Db
+	id := c.Param("id")
 	form, err := c.MultipartForm()
 	if err != nil {
 		return c.JSON(http.StatusBadRequest, map[string]string{
@@ -23,7 +26,6 @@ func UploadFilesToS3(c echo.Context) error {
 	}
 
 	files := form.File["files"]
-
 	sess, err := session.NewSession(&aws.Config{
 		Region: aws.String(os.Getenv("AWS_REGION")),
 		Credentials: credentials.NewStaticCredentials(
@@ -82,8 +84,15 @@ func UploadFilesToS3(c echo.Context) error {
 			"filename": filename,
 			"url":      urlStr,
 		})
-	}
 
+		_, err = db.Exec(`UPDATE products SET data=$1 WHERE id=$2`, urlStr, id)
+		if err != nil {
+			return c.JSON(http.StatusInternalServerError, map[string]string{
+				"message": "Failed to generate pre-signed URL",
+				"data":    err.Error(),
+			})
+		}
+	}
 	return c.JSON(http.StatusOK, map[string]interface{}{
 		"message": "Files uploaded successfully",
 		"data":    uploadedFiles,

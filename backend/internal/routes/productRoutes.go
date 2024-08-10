@@ -9,10 +9,13 @@ import (
 )
 
 func ProductRoutes(e *echo.Echo) {
-	e.POST("/upload", controllers.UploadFilesToS3)
+	e.POST("/upload/:id", controllers.AddData)
 
 	r := e.Group("/products")
+
+	r.GET("/getByUser", controllers.GetProductsOfUser, echojwt.JWT(controllers.JWTSecret), middleWare.Protected)
 	r.POST("/create", controllers.CreateProduct, echojwt.JWT(controllers.JWTSecret), middleWare.Protected)
+
 	r.GET("/getAll", controllers.GetAllProduct)
 	r.GET("/getByMachine/:machine", controllers.GetProductByMachine)
 	r.POST("/updateData", controllers.UpdateProduct)
