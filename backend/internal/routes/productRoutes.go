@@ -18,5 +18,6 @@ func ProductRoutes(e *echo.Echo) {
 
 	r.GET("/getAll", controllers.GetAllProduct)
 	r.GET("/getByMachine/:machine", controllers.GetProductByMachine)
+	r.GET("/getByID/:id", controllers.GetProductByID)
 	r.POST("/updateData", controllers.UpdateProduct)
 }

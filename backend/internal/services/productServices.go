@@ -131,6 +131,42 @@ func GetProductsByUserID(id uuid.UUID) ([]models.Product, error) {
 
 }
 
+func GetProductsByID(id string) ([]models.Product, error) {
+	db := database.DB.Db
+
+	rows, err := db.Query(`SELECT id, user_id, time, vehicle_name, machine, components, expected_failure_date FROM products WHERE id=$1`, id)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+
+	var products []models.Product
+
+	for rows.Next() {
+		var product models.Product
+		var componentsJSON []byte
+
+		err := rows.Scan(&product.ID, &product.UserID, &product.Time, &product.VehicleName, &product.Machine, &componentsJSON, &product.ExpectedFailureDate)
+		if err != nil {
+			return nil, err
+		}
+
+		err = json.Unmarshal(componentsJSON, &product.Components)
+		if err != nil {
+			return nil, err
+		}
+
+		products = append(products, product)
+	}
+
+	if err = rows.Err(); err != nil {
+		return nil, err
+	}
+
+	return products, nil
+
+}
+
 func UpdateProductDate(date time.Time, id uuid.UUID) error {
 	db := database.DB.Db
 	_, err := db.Exec(`UPDATE products SET expected_failure_date= $1 WHERE id=$2`, date, id)

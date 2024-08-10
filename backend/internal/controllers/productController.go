@@ -68,6 +68,18 @@ func GetProductByMachine(c echo.Context) error {
 	return c.JSON(http.StatusOK, product)
 }
 
+func GetProductByID(c echo.Context) error {
+	id := c.Param("id")
+	product, err := services.GetProductsByID(id)
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, map[string]string{
+			"message": "Failed to get product",
+			"data":    err.Error(),
+		})
+	}
+	return c.JSON(http.StatusOK, product)
+}
+
 // GetAllProduct fetches all products from the database
 func GetAllProduct(c echo.Context) error {
 	products, err := services.GetAllProducts()
