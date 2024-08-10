@@ -35,5 +35,5 @@ func main() {
 		})
 	})
 
-	e.Logger.Fatal(e.Start("0.0.0.0:" + utils.Config("PORT")))
+	e.Logger.Fatal(e.Start(":" + utils.Config("PORT")))
 }

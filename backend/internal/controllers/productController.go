@@ -80,7 +80,6 @@ func GetProductByID(c echo.Context) error {
 	return c.JSON(http.StatusOK, product)
 }
 
-// GetAllProduct fetches all products from the database
 func GetAllProduct(c echo.Context) error {
 	products, err := services.GetAllProducts()
 	if err != nil {
