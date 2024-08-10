@@ -15,20 +15,20 @@ func CreateProduct(c echo.Context) error {
 		Machine    string `json:"machine"`
 		Components struct {
 			Engine struct {
-				Temperature float64 `json:"temperature"`
-				Speed       float64 `json:"speed"`
-				OilPressure float64 `json:"oilPressure"`
+				EngineTemperature float64 `json:"engineTemperature"`
+				EngineSpeed       float64 `json:"engineSpeed"`
+				OilPressure       float64 `json:"oilPressure"`
 			} `json:"engine"`
 			Fuel struct {
-				WaterInFuel float64 `json:"WaterInFuel"`
-				Level       float64 `json:"level"`
-				Pressure    float64 `json:"Pressure"`
-				Temperature float64 `json:"Temperature"`
+				WaterInFuel     float64 `json:"WaterInFuel"`
+				FuelLevel       float64 `json:"fuelLevel"`
+				FuelPressure    float64 `json:"fuelPressure"`
+				FuelTemperature float64 `json:"fuelTemperature"`
 			} `json:"fuel"`
 			Drive struct {
 				TransmissionPressure float64 `json:"transmissionPressure"`
-				BrakeControl         float64 `json:"brakecontrol"`
-				PedalSensor          float64 `json:"pedalsensor"`
+				BrakeControl         float64 `json:"brakeControl"`
+				PedalSensor          float64 `json:"pedalSensor"`
 			} `json:"drive"`
 			Misc struct {
 				ExhaustGasTemperature float64 `json:"exhaustGasTemperature"`
