@@ -10,4 +10,7 @@ createdb:
 dropdb:
 	docker exec -it postgres12 dropdb 
 	
-.PHONY: run postgres createdb dropdb
+dockerfiledb:
+	docker exec -it backend-db-1 bash
+
+.PHONY: run postgres createdb dropdb dockerfiledb
