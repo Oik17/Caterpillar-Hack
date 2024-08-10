@@ -77,6 +77,18 @@ func GetAllProduct(c echo.Context) error {
 	return c.JSON(http.StatusOK, product)
 }
 
+func GetProductByMachine(c echo.Context) error {
+	machine := c.Param("machine")
+	product, err := services.GetProductByMachine(machine)
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, map[string]string{
+			"message": "Failed to get products",
+			"data":    err.Error(),
+		})
+	}
+	return c.JSON(http.StatusOK, product)
+}
+
 func UpdateProduct(c echo.Context) error {
 	var prod struct {
 		ID   uuid.UUID `json:"id"`
