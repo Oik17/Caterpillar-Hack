@@ -67,6 +67,20 @@ func CreateProduct(c echo.Context) error {
 	return c.JSON(http.StatusOK, product)
 }
 
+func GetProductsOfUser(c echo.Context) error {
+
+	userID := c.Get("user_id").(uuid.UUID)
+	products, err := services.GetProductsByUserID(userID)
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, map[string]string{
+			"message": "Failed to fetch products",
+			"data":    err.Error(),
+		})
+	}
+	return c.JSON(http.StatusOK, products)
+
+}
+
 func GetAllProduct(c echo.Context) error {
 	product, err := services.GetAllProducts()
 	if err != nil {
