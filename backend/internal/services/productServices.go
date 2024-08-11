@@ -100,7 +100,7 @@ func GetProductByMachine(machine string) ([]models.Product, error) {
 func GetProductsByUserID(id uuid.UUID) ([]models.Product, error) {
 	db := database.DB.Db
 
-	rows, err := db.Query(`SELECT id, user_id, time, vehicle_name, machine, components, expected_failure_date FROM products WHERE user_id=$1`, id)
+	rows, err := db.Query(`SELECT id, user_id, time, vehicle_name, machine, components, expected_failure_date, health_check FROM products WHERE user_id=$1`, id)
 	if err != nil {
 		return nil, err
 	}
@@ -111,15 +111,28 @@ func GetProductsByUserID(id uuid.UUID) ([]models.Product, error) {
 	for rows.Next() {
 		var product models.Product
 		var componentsJSON []byte
+		var healthJSON []byte
 
-		err := rows.Scan(&product.ID, &product.UserID, &product.Time, &product.VehicleName, &product.Machine, &componentsJSON, &product.ExpectedFailureDate)
+		// Scan the health_check and components fields into byte slices
+		err := rows.Scan(&product.ID, &product.UserID, &product.Time, &product.VehicleName, &product.Machine, &componentsJSON, &product.ExpectedFailureDate, &healthJSON)
 		if err != nil {
 			return nil, err
 		}
 
-		err = json.Unmarshal(componentsJSON, &product.Components)
-		if err != nil {
-			return nil, err
+		// Check if componentsJSON is empty or nil before unmarshaling
+		if len(componentsJSON) > 0 {
+			err = json.Unmarshal(componentsJSON, &product.Components)
+			if err != nil {
+				return nil, err
+			}
+		}
+
+		// Check if healthJSON is empty or nil before unmarshaling
+		if len(healthJSON) > 0 {
+			err = json.Unmarshal(healthJSON, &product.HealthCheck)
+			if err != nil {
+				return nil, err
+			}
 		}
 
 		products = append(products, product)
@@ -130,7 +143,6 @@ func GetProductsByUserID(id uuid.UUID) ([]models.Product, error) {
 	}
 
 	return products, nil
-
 }
 
 func GetProductsByID(id string) ([]models.Product, error) {
