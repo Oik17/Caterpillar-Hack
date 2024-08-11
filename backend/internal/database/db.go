@@ -24,7 +24,7 @@ func Connect() {
 		fmt.Println("Error parsing str to int")
 	}
 
-	dsn := fmt.Sprintf("host=%s user=%s password=%s dbname=%s port=%d sslmode=disable TimeZone=Asia/Shanghai", utils.Config("DB_HOST"), utils.Config("DB_USER"), utils.Config("DB_PASSWORD"), utils.Config("DB_NAME"), port)
+	dsn := fmt.Sprintf("host=%s user=%s password=%s dbname=%s port=%d sslmode=require TimeZone=Asia/Shanghai", utils.Config("DB_HOST"), utils.Config("DB_USER"), utils.Config("DB_PASSWORD"), utils.Config("DB_NAME"), port)
 
 	db, err := sqlx.Open("postgres", dsn)
 	if err != nil {
@@ -64,9 +64,17 @@ func runMigrations(db *sqlx.DB) {
 			vehicle_name VARCHAR(255),
 			machine VARCHAR(255),
 			components JSONB, -- Store components as JSON
-			expected_failure_date DATE,
-			data TEXT,
-			health_card TEXT
+			expected_failure_date DATE
+		);
+
+		CREATE TABLE IF NOT EXISTS products1 (
+			id UUID PRIMARY KEY,
+			user_id UUID REFERENCES users(id),
+			time TIMESTAMP,
+			vehicle_name VARCHAR(255),
+			machine VARCHAR(255),
+			components JSONB, -- Store components as JSON
+			health_score FLOAT
 		);
 	`)
 
