@@ -64,9 +64,7 @@ func runMigrations(db *sqlx.DB) {
 			vehicle_name VARCHAR(255),
 			machine VARCHAR(255),
 			components JSONB, -- Store components as JSON
-			expected_failure_date DATE,
-			data TEXT,
-			health_card TEXT
+			expected_failure_date DATE
 		);
 
 		CREATE TABLE IF NOT EXISTS products1 (
@@ -76,7 +74,6 @@ func runMigrations(db *sqlx.DB) {
 			vehicle_name VARCHAR(255),
 			machine VARCHAR(255),
 			components JSONB, -- Store components as JSON
-			expected_failure_date DATE,
 			health_score FLOAT
 		);
 	`)

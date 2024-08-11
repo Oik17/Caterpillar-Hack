@@ -8,34 +8,34 @@ import (
 )
 
 type SensorData struct {
-	Date   map[int]string  `json:"date"`
-	Time   map[int]string  `json:"time"`
-	Values map[int]float64 `json:"values"`
+	Date   map[int]string  `json:"Date"`
+	Time   map[int]string  `json:"Time"`
+	Values map[int]float64 `json:"Values"`
 }
 
 type Component struct {
 	Engine struct {
-		Temperature SensorData `json:"temperature"`
-		OilPressure SensorData `json:"oilPressure"`
-		Speed       SensorData `json:"speed"`
-	} `json:"engine"`
+		Temperature SensorData `json:"Temperature"`
+		OilPressure SensorData `json:"OilPressure"`
+		Speed       SensorData `json:"Speed"`
+	} `json:"Engine"`
 	Drive struct {
-		BrakeControl         SensorData `json:"brakeControl"`
-		PedalSensor          SensorData `json:"pedalSensor"`
-		TransmissionPressure SensorData `json:"transmissionPressure"`
-	} `json:"drive"`
+		BrakeControl         SensorData `json:"Brake Control"`
+		PedalSensor          SensorData `json:"Pedal Sensor"`
+		TransmissionPressure SensorData `json:"Transmission Pressure"`
+	} `json:"Drive"`
 	Fuel struct {
-		WaterInFuel SensorData `json:"waterInFuel"`
-		Pressure    SensorData `json:"pressure"`
-		Temperature SensorData `json:"temperature"`
-		Level       SensorData `json:"level"`
-	} `json:"fuel"`
+		WaterInFuel SensorData `json:"Water In Fuel"`
+		Pressure    SensorData `json:"Pressure"`
+		Temperature SensorData `json:"Temperature"`
+		Level       SensorData `json:"Level"`
+	} `json:"Fuel"`
 	Misc struct {
-		AirFilterPressure     SensorData `json:"airFilterPressure"`
-		SystemVoltage         SensorData `json:"systemVoltage"`
-		HydraulicPumpRate     SensorData `json:"hydraulicPumpRate"`
-		ExhaustGasTemperature SensorData `json:"exhaustGasTemperature"`
-	} `json:"misc"`
+		AirFilterPressure     SensorData `json:"Air Filter Pressure"`
+		SystemVoltage         SensorData `json:"System Voltage"`
+		HydraulicPumpRate     SensorData `json:"Hydraulic Pump Rate"`
+		ExhaustGasTemperature SensorData `json:"Exhaust Gas Temperature"`
+	} `json:"Misc"`
 }
 
 type Product struct {
@@ -52,27 +52,27 @@ type Product struct {
 
 type Component1 struct {
 	Engine struct {
-		Temperature float64 `json:"temperature"`
-		Speed       float64 `json:"speed"`
-		OilPressure float64 `json:"oilPressure"`
-	} `json:"engine"`
+		Temperature float64 `json:"Temperature"`
+		Speed       float64 `json:"Speed"`
+		OilPressure float64 `json:"Oil Pressure"`
+	} `json:"Engine"`
 	Fuel struct {
-		WaterInFuel float64 `json:"WaterInFuel"`
-		Level       float64 `json:"level"`
+		WaterInFuel float64 `json:"Water In Fuel"`
+		Level       float64 `json:"Level"`
 		Pressure    float64 `json:"Pressure"`
 		Temperature float64 `json:"Temperature"`
-	} `json:"fuel"`
+	} `json:"Fuel"`
 	Drive struct {
-		TransmissionPressure float64 `json:"transmissionPressure"`
-		BrakeControl         float64 `json:"brakecontrol"`
-		PedalSensor          float64 `json:"pedalsensor"`
-	} `json:"drive"`
+		TransmissionPressure float64 `json:"Transmission Pressure"`
+		BrakeControl         float64 `json:"Brake Control"`
+		PedalSensor          float64 `json:"Pedal Sensor"`
+	} `json:"Drive"`
 	Misc struct {
-		ExhaustGasTemperature float64 `json:"exhaustGasTemperature"`
-		AirFilterPressure     float64 `json:"airFilterPresure"`
-		SystemVoltage         float64 `json:"systemVoltage"`
-		HydraulicPumpRate     float64 `json:"hydraulicPumpRate"`
-	} `json:"misc"`
+		ExhaustGasTemperature float64 `json:"Exhaust Gas Temperature"`
+		AirFilterPressure     float64 `json:"Air Filter Presure"`
+		SystemVoltage         float64 `json:"System Voltage"`
+		HydraulicPumpRate     float64 `json:"Hydraulic Pump Rate"`
+	} `json:"Misc"`
 }
 
 type Product1 struct {
@@ -83,5 +83,5 @@ type Product1 struct {
 	Machine             string        `json:"machine"`
 	Components          Component1    `json:"components"` // Replaced Component and Parameter fields
 	ExpectedFailureDate sql.NullTime  `json:"expected_failure_date"`
-	HealthScore         sql.NullInt16 `json:"healthscore"`
+	HealthScore         sql.NullInt16 `json:"health_score"`
 }
