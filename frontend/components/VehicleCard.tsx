@@ -10,11 +10,11 @@ export function VehicleCard({ className, data, ...props }: CardProps & { data: a
         router.push(`/healthCheck/${data.id}`)
     }
   return (
-    <div className="w-[400px] relative border-2 border-black cursor-pointer" onClick={onClick}>
+    <div className="md:w-[400px] w-[200px] bg-slate-400 relative border-2 border-black cursor-pointer" onClick={onClick}>
       <Image
         src={`/${data.machine}.jpeg`}
         alt={data.machine}
-        width={400}
+        width={100}
         height={300}
         className="w-full h-auto"
       />

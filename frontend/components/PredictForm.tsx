@@ -131,7 +131,7 @@ export const PredictForm = ({}: Props) => {
       );
 
       console.log("Request successful:", response.data);
-      toast.success(response.data.message);
+      toast.success("Successful");
       
     } catch (error: AxiosError | any) {
       console.error("Request failed:", error);
