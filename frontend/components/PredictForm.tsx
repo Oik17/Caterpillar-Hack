@@ -34,6 +34,7 @@ import { useState } from "react";
 type Props = {};
 
 const formSchema = z.object({
+  vehicle_name: z.string().min(1,"Please enter a machine name"),
   machine: z.string().min(1, "Please select a machine"),
   engineTemperature: z.string().min(1, "Temperature is required"),
   engineSpeed: z.string().min(1, "Engine Speed is required"),
@@ -66,6 +67,7 @@ export const PredictForm = ({}: Props) => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
+      vehicle_name:"",
       machine: "",
       engineTemperature: "",
       engineSpeed: "",
@@ -138,7 +140,7 @@ export const PredictForm = ({}: Props) => {
   }
 
   return (
-    <div className="w-full   flex justify-center">
+    <div className="w-full flex justify-center">
       {/* <span className="text-2xl bg-yellow-300 p-2 rounded-md w-full">
         Machine
       </span> */}
@@ -149,6 +151,32 @@ export const PredictForm = ({}: Props) => {
             onSubmit={form.handleSubmit(onSubmit)}
             className="space-y-3 flex flex-col"
           >
+            <div className="flex items-center gap-2 md:mt-10 mt-2">
+
+            <span className="text-xl underline decoration-yellow-400">
+                Machine Name :
+              </span>
+              
+                <FormField
+                  control={form.control}
+                  name="vehicle_name"
+                  render={({ field }) => (
+                    <FormItem>
+                      {/* <FormLabel>Machine name</FormLabel> */}
+                      <FormControl>
+                        <Input
+                          type="text"
+                          placeholder="machine name"
+                          {...field}
+                          className="md:md:w-[300px] w-[200px] "
+                        />
+                      </FormControl>
+                      {/* <FormDescription>This is your email.</FormDescription> */}
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+            </div>
             <FormField
               control={form.control}
               name="machine"
