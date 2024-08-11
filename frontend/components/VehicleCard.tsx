@@ -15,9 +15,9 @@ export function VehicleCard({ className, data, ...props }: CardProps & { data: a
       <Image
         src={`/${data.machine}.jpeg`}
         alt={data.machine}
-        width={100}
+        width={300}
         height={100}
-        className="w-full h-full object-cover"
+        className="h-full object-cover"
       />
       <div className="absolute inset-0 bg-black opacity-30"></div>
       <div className="absolute bottom-0 left-0 right-0 text-white px-6 py-4">

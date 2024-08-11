@@ -154,7 +154,7 @@ export const PredictForm = ({}: Props) => {
             <div className="flex items-center gap-2 md:mt-10 mt-2">
 
             <span className="text-xl underline decoration-yellow-400">
-                Machine Name :
+                Machine Id :
               </span>
               
                 <FormField
@@ -166,7 +166,7 @@ export const PredictForm = ({}: Props) => {
                       <FormControl>
                         <Input
                           type="text"
-                          placeholder="machine name"
+                          placeholder="machine id"
                           {...field}
                           className="md:md:w-[300px] w-[200px] "
                         />
@@ -260,7 +260,7 @@ export const PredictForm = ({}: Props) => {
                       <FormControl>
                         <Input
                           type="text"
-                          placeholder="tempearture"
+                          placeholder="speed"
                           {...field}
                           className="md:w-[300px] w-[200px]"
                         />
@@ -279,7 +279,7 @@ export const PredictForm = ({}: Props) => {
                       <FormControl>
                         <Input
                           type="text"
-                          placeholder="tempearture"
+                          placeholder="oil pressure"
                           {...field}
                           className="md:w-[300px] w-[200px]"
                         />
@@ -325,7 +325,7 @@ export const PredictForm = ({}: Props) => {
                         <FormControl>
                           <Input
                             type="text"
-                            placeholder="tempearture"
+                            placeholder="fuel level"
                             {...field}
                             className="md:w-[300px] w-[200px]"
                           />
@@ -344,7 +344,7 @@ export const PredictForm = ({}: Props) => {
                         <FormControl>
                           <Input
                             type="text"
-                            placeholder="tempearture"
+                            placeholder="fuel pressure"
                             {...field}
                             className="md:w-[300px] w-[200px]"
                           />
