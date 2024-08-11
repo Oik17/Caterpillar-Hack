@@ -21,6 +21,14 @@ const alerts = {
       ["2006-08-10", "2006-08-11", "2006-08-12"], 
       [1520, 1120, 1424], 
     ],
+    [
+      "Fuel",
+      "Speed",
+      "Overshooting",
+      3,
+      ["2006-08-10", "2006-08-11", "2006-08-12"], 
+      [1520, 1120, 1424], 
+    ],
   ],
 };
 
@@ -38,7 +46,7 @@ const Navigation = ({ page }: PageType) => {
   };
 
   return (
-    <div className="w-full h-20 bg-yellow-500 border-b-8 border-yellow-400 flex items-center md:text-lg text-sm font-semibold relative">
+    <div className=" w-full h-16 bg-yellow-500 flex items-center md:text-lg text-sm font-semibold relative">
       <section className="h-full w-[20%] max-w-[400px] min-w-[100px] flex justify-center items-center">
         <Image src={'/bulldozer.png'} width={40} height={40} alt="logo" />
       </section>
@@ -49,7 +57,7 @@ const Navigation = ({ page }: PageType) => {
       <section className="w-[40%] h-full flex justify-center gap-10 items-center">
         <Button className="bg-yellow-400 text-amber-600 font-bold hover:bg-yellow-300" onClick={Logout}>Logout</Button>
         <div className="relative">
-          <IoMdNotifications className="text-2xl text-yellow-600 cursor-pointer" onClick={toggleDropdown} />
+          <IoMdNotifications className="text-2xl text-yellow-600 cursor-pointer hover:text-yellow-700" onClick={toggleDropdown} />
           {isDropdownOpen && (
             <div className="absolute right-0 mt-2 w-60 bg-white border border-gray-200 rounded-lg shadow-lg z-10">
               {alerts.alerts.length > 0 ? (
@@ -66,7 +74,7 @@ const Navigation = ({ page }: PageType) => {
                     )}
                     {Array.isArray(alert[4]) && (
                       <div className="text-xs text-gray-500">
-                        Dates: {alert[4].join(', ')}
+                        Dates: {alert[4][0]}
                       </div>
                     )}
                   </div>

@@ -21,6 +21,7 @@ const Dashboard = () => {
             },
           }
         );
+        console.log(response.data)
         setVehicles(response.data);
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -35,11 +36,12 @@ const Dashboard = () => {
       <div className="h-full w-full">
         <Navigation page={"dashboard"} />
       </div>
-      <div className="overflow-y-auto h-[600px] scrollbar flex flex-col justify-start md:ml-10">
+      <div className="overflow-y-auto h-[620px] scrollbar flex flex-col justify-center items-center md:ml-10">
       <span className="text-2xl font-bold md:mt-14 mt-5 text-green-600">Your Vehicles </span>
         {vehicles&&vehicles.length>0 ? (
-          <div className="w-[80%] grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-2 place-items-center mt-6 border-2 ">
+          <div className="w-[90%] grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3  gap-8 place-items-center mt-6 border-2 ">
             {vehicles.map((vehicle, index) => (
+              
               <VehicleCard key={index} data={vehicle} />
             ))}
           </div>
