@@ -120,7 +120,7 @@ export const PredictForm = ({}: Props) => {
       const token = localStorage.getItem("Auth");
 
       const response = await axios.post(
-        "http://localhost:8080/products/create",
+        "https://caterpillar-hack-production.up.railway.app/products/create",
         data,
         {
           headers: {

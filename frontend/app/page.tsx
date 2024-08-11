@@ -37,7 +37,7 @@ export default function ProfileForm() {
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     try {
-      const response = await axios.post("http://localhost:8080/login", {
+      const response = await axios.post("https://caterpillar-hack-production.up.railway.app/login", {
         email: values.email,
         password: values.password,
       });

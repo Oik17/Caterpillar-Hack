@@ -7,7 +7,7 @@ type CardProps = React.ComponentProps<typeof Card>;
 export function VehicleCard({ className, data, ...props }: CardProps & { data: any }) {
     const router = useRouter();
     const onClick=()=>{
-        router.push(`${data.id}/healthCheck`)
+        router.push(`/healthCheck/${data.id}`)
     }
   return (
     <div className="w-[400px] relative border-2 border-black cursor-pointer" onClick={onClick}>
