@@ -6,6 +6,10 @@ import { useRouter } from "next/navigation";
 import { IoMdNotifications } from "react-icons/io";
 import Image from "next/image";
 import { useState } from "react";
+import { IoHome } from "react-icons/io5";
+import { FiPlus } from "react-icons/fi";
+
+
 
 interface PageType {
   page: string;
@@ -17,15 +21,15 @@ const alerts = {
       "Engine",
       "Speed",
       "Overshooting",
-      3,
+      "high",
       ["2006-08-10", "2006-08-11", "2006-08-12"], 
       [1520, 1120, 1424], 
     ],
     [
       "Fuel",
-      "Speed",
+      "Water in Fuel",
       "Overshooting",
-      3,
+      "Low",
       ["2006-08-10", "2006-08-11", "2006-08-12"], 
       [1520, 1120, 1424], 
     ],
@@ -46,18 +50,20 @@ const Navigation = ({ page }: PageType) => {
   };
 
   return (
-    <div className=" w-full h-16 bg-yellow-500 flex items-center md:text-lg text-sm font-semibold relative">
+    <div className="text-gray-20000 w-full h-16 bg-gray-200 flex items-center md:text-lg text-sm font-semibold relative ">
       <section className="h-full w-[20%] max-w-[400px] min-w-[100px] flex justify-center items-center">
-        <Image src={'/bulldozer.png'} width={40} height={40} alt="logo" />
+        <Image src={'/logo.png'} width={120} height={40} alt="logo" />
       </section>
       <section className="w-[40%] h-full flex justify-center md:gap-10 gap-4 items-center">
-        <Link href={'/dashboard'} className={`${page === 'dashboard' ? 'underline' : ''}`}>Home</Link>
-        <Link href={'/AddVehicle'} className={`${page === 'predict' ? 'underline' : ''}`}>Add Vehicle</Link>
       </section>
       <section className="w-[40%] h-full flex justify-center gap-10 items-center">
-        <Button className="bg-yellow-400 text-amber-600 font-bold hover:bg-yellow-300" onClick={Logout}>Logout</Button>
+        <Link href={'/dashboard'} className={`${page === 'dashboard' ? 'underline' : ''}`}><IoHome/></Link>
+        <Link href={'/AddVehicle'} className={`${page === 'predict' ? 'underline' : ''}`}><FiPlus/></Link>
         <div className="relative">
-          <IoMdNotifications className="text-2xl text-yellow-600 cursor-pointer hover:text-yellow-700" onClick={toggleDropdown} />
+            <div className=" rounded-full p-1">
+
+          <IoMdNotifications className="text-2xl cursor-pointer" onClick={toggleDropdown} />
+            </div>
           {isDropdownOpen && (
             <div className="absolute right-0 mt-2 w-60 bg-white border border-gray-200 rounded-lg shadow-lg z-10">
               {alerts.alerts.length > 0 ? (
@@ -67,14 +73,14 @@ const Navigation = ({ page }: PageType) => {
                     <div className="text-sm text-gray-600">
                       {alert[1]}: {alert[2]}
                     </div>
-                    {typeof alert[3] === 'number' && alert[3] > 0 && (
-                      <div className="mt-2 text-red-600 font-bold">
-                        Alert Count: {alert[3]}
+                    {typeof alert[3] === 'string' && (
+                      <div className={`mt-2 ${alert[3]=='high'?'text-red-600':'text-yellow-400'} font-bold`}>
+                        Alert Priority: {alert[3]}
                       </div>
                     )}
                     {Array.isArray(alert[4]) && (
                       <div className="text-xs text-gray-500">
-                        Dates: {alert[4][0]}
+                        Expected Date of Failure: {alert[4][0]}
                       </div>
                     )}
                   </div>
@@ -85,6 +91,7 @@ const Navigation = ({ page }: PageType) => {
             </div>
           )}
         </div>
+        <Button className="bg-black text-yellow-400 font-bold hover:bg-gray-800" onClick={Logout}>Logout</Button>
       </section>
     </div>
   );
