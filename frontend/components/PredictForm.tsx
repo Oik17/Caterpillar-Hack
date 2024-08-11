@@ -532,7 +532,7 @@ export const PredictForm = ({}: Props) => {
                 type="submit"
                 className="md:w-[300px] w-[200px] bg-yellow-400 text-yellow-600 font-bold hover:bg-yellow-300"
               >
-                Generate Prediction
+                Add Vehicle
               </Button>
             </div>
           </form>

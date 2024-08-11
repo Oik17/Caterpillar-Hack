@@ -5,7 +5,6 @@ import { VehicleCard } from "@/components/VehicleCard";
 import axios from "axios";
 import { useEffect, useState } from "react";
 
-
 const Dashboard = () => {
   const [vehicles, setVehicles] = useState([]);
 
@@ -21,7 +20,7 @@ const Dashboard = () => {
             },
           }
         );
-        console.log(response.data)
+        console.log(response.data);
         setVehicles(response.data);
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -32,16 +31,19 @@ const Dashboard = () => {
   }, []);
 
   return (
-    <div>
+    <div className="flex flex-col">
       <div className="h-full w-full">
         <Navigation page={"dashboard"} />
       </div>
-      <div className="overflow-y-auto h-[620px] scrollbar flex flex-col justify-center items-center md:ml-10">
-      <span className="text-2xl font-bold md:mt-14 mt-5 text-green-600">Your Vehicles </span>
-        {vehicles&&vehicles.length>0 ? (
-          <div className="w-[90%] grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3  gap-8 place-items-center mt-6 border-2 ">
+      <div className="overflow-y-auto h-[800px] scrollbar flex flex-col justify-center items-center md:ml-10">
+        <div className="h-14 items-start w-[62%]">
+          <span className="text-4xl font-bold md:mt-4 mt-2 text-yellow-500">
+            Your Vehicles{" "}
+          </span>
+        </div>
+        {vehicles && vehicles.length > 0 ? (
+          <div className="w-[62%] grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-y-2 place-items-center mt-6 ">
             {vehicles.map((vehicle, index) => (
-              
               <VehicleCard key={index} data={vehicle} />
             ))}
           </div>
