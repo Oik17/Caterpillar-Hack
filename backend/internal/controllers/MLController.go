@@ -39,7 +39,6 @@ func UpdateData(c echo.Context) error {
 		})
 	}
 
-	// Fetch the old components JSON by ID
 	data, err := services.GetDataByID(id)
 	if err != nil {
 		return c.JSON(http.StatusBadRequest, map[string]string{
@@ -48,7 +47,6 @@ func UpdateData(c echo.Context) error {
 		})
 	}
 
-	// Unmarshal the JSON data into a models.Component struct
 	var oldComponents models.Component
 	err = json.Unmarshal(data, &oldComponents)
 	if err != nil {
@@ -58,7 +56,6 @@ func UpdateData(c echo.Context) error {
 		})
 	}
 
-	// Fetch the health card by ID
 	healthCardJSON, err := services.GetHealthByID(id)
 	if err != nil {
 		return c.JSON(http.StatusBadRequest, map[string]string{
@@ -67,7 +64,6 @@ func UpdateData(c echo.Context) error {
 		})
 	}
 
-	// Unmarshal the JSON data into a slice of models.HealthCheck
 	var healthChecks []models.HealthCheck
 	err = json.Unmarshal(healthCardJSON, &healthChecks)
 	if err != nil {
@@ -77,7 +73,6 @@ func UpdateData(c echo.Context) error {
 		})
 	}
 
-	// Check if there are any health checks
 	if len(healthChecks) == 0 {
 		return c.JSON(http.StatusInternalServerError, map[string]string{
 			"message": "No health check data found",
@@ -104,8 +99,7 @@ func UpdateData(c echo.Context) error {
 		})
 	}
 
-	// Create the POST request to Flask
-	req, err := http.NewRequest("POST", "http://localhost:5000/update_data", bytes.NewBuffer(jsonPayload))
+	req, err := http.NewRequest("POST", "https://aj1544.pythonanywhere.com/update_data", bytes.NewBuffer(jsonPayload))
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, map[string]string{
 			"message": "Failed to create POST request",
@@ -115,7 +109,6 @@ func UpdateData(c echo.Context) error {
 
 	req.Header.Set("Content-Type", "application/json")
 
-	// Send the POST request to Flask
 	client := &http.Client{}
 	resp, err := client.Do(req)
 	if err != nil {
@@ -126,7 +119,6 @@ func UpdateData(c echo.Context) error {
 	}
 	defer resp.Body.Close()
 
-	// Read the response from Flask
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, map[string]string{
@@ -150,7 +142,6 @@ func PredictData(c echo.Context) error {
 		})
 	}
 
-	// Unmarshal the JSON data into a models.Component struct
 	var oldComponents models.Component
 	err = json.Unmarshal(data, &oldComponents)
 	if err != nil {
@@ -172,8 +163,7 @@ func PredictData(c echo.Context) error {
 		})
 	}
 
-	// Create the POST request to Flask
-	req, err := http.NewRequest("POST", "http://localhost:5000/predict", bytes.NewBuffer(jsonPayload))
+	req, err := http.NewRequest("POST", "https://aj1544.pythonanywhere.com/predict", bytes.NewBuffer(jsonPayload))
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, map[string]string{
 			"message": "Failed to create POST request",
@@ -183,7 +173,6 @@ func PredictData(c echo.Context) error {
 
 	req.Header.Set("Content-Type", "application/json")
 
-	// Send the POST request to Flask
 	client := &http.Client{}
 	resp, err := client.Do(req)
 	if err != nil {
@@ -194,7 +183,6 @@ func PredictData(c echo.Context) error {
 	}
 	defer resp.Body.Close()
 
-	// Read the response from Flask
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, map[string]string{
