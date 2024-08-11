@@ -35,8 +35,8 @@ const Dashboard = () => {
       <div className="h-full w-full">
         <Navigation page={"dashboard"} />
       </div>
-      <div className="overflow-y-auto h-[800px] scrollbar flex flex-col justify-center items-center md:ml-10">
-        <div className="h-14 items-start w-[62%]">
+      <div className="overflow-y-auto h-[700px] scrollbar flex flex-col justify-center items-center md:ml-10">
+        <div className="h-10 items-start w-[62%]">
           <span className="text-4xl font-bold md:mt-4 mt-2 text-yellow-500">
             Your Vehicles{" "}
           </span>
