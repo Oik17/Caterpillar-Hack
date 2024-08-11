@@ -1,7 +1,9 @@
 package services
 
 import (
+	"database/sql"
 	"encoding/json"
+	"errors"
 	"time"
 
 	"github.com/Oik17/Caterpillar-Hack/internal/database"
@@ -206,4 +208,64 @@ func GetProductHealthCheck(productID uuid.UUID) ([]models.HealthCheck, error) {
 	}
 
 	return healthChecks, nil
+}
+
+func GetDataByID(id string) ([]byte, error) {
+	db := database.DB.Db
+
+	// Prepare the query to fetch the components JSON based on the provided ID
+	row := db.QueryRow(`SELECT components FROM products WHERE id=$1`, id)
+
+	// Variable to hold the components JSON data
+	var componentsJSON []byte
+
+	// Scan the result into the componentsJSON variable
+	err := row.Scan(&componentsJSON)
+	if err == sql.ErrNoRows {
+		return nil, errors.New("no product found with the given ID")
+	} else if err != nil {
+		return nil, err
+	}
+
+	// Unmarshal the JSON into the Product struct to check its validity
+	var components models.Component
+	err = json.Unmarshal(componentsJSON, &components)
+	if err != nil {
+		return nil, err
+	}
+
+	// Return the unmarshaled JSON or the componentsJSON depending on what you need
+	return componentsJSON, nil
+}
+func GetHealthByID(id string) ([]byte, error) {
+	db := database.DB.Db
+
+	// Prepare the query to fetch the health_check JSON based on the provided ID
+	row := db.QueryRow(`SELECT health_check FROM products WHERE id=$1`, id)
+
+	// Variable to hold the health_check JSON data
+	var healthCheckJSON []byte
+
+	// Scan the result into the healthCheckJSON variable
+	err := row.Scan(&healthCheckJSON)
+	if err == sql.ErrNoRows {
+		return nil, errors.New("no product found with the given ID")
+	} else if err != nil {
+		return nil, err
+	}
+
+	// Unmarshal the JSON data into a slice of HealthCheck
+	var healthChecks []models.HealthCheck
+	err = json.Unmarshal(healthCheckJSON, &healthChecks)
+	if err != nil {
+		return nil, err
+	}
+
+	// Check if there are any health checks
+	if len(healthChecks) == 0 {
+		return nil, errors.New("no health check data found")
+	}
+
+	// Return the JSON data for the first health check
+	return healthCheckJSON, nil
 }
