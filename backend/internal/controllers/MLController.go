@@ -99,7 +99,7 @@ func UpdateData(c echo.Context) error {
 		})
 	}
 
-	req, err := http.NewRequest("POST", "https://aj1544.pythonanywhere.com/update_data", bytes.NewBuffer(jsonPayload))
+	req, err := http.NewRequest("POST", "http://localhost:5000/update_data", bytes.NewBuffer(jsonPayload))
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, map[string]string{
 			"message": "Failed to create POST request",
@@ -163,7 +163,7 @@ func PredictData(c echo.Context) error {
 		})
 	}
 
-	req, err := http.NewRequest("POST", "https://aj1544.pythonanywhere.com/predict", bytes.NewBuffer(jsonPayload))
+	req, err := http.NewRequest("POST", "http://localhost:5000/predict", bytes.NewBuffer(jsonPayload))
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, map[string]string{
 			"message": "Failed to create POST request",
