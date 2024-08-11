@@ -36,7 +36,7 @@ const Dashboard = () => {
         <Navigation page={"dashboard"} />
       </div>
       <div className="overflow-y-auto h-[600px] scrollbar flex justify-center">
-        {vehicles.length>0 ? (
+        {vehicles&&vehicles.length>0 ? (
           <div className="w-[80%] grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 gap-y-2 place-items-center mt-6">
             {vehicles.map((vehicle, index) => (
               <VehicleCard key={index} data={vehicle} />
