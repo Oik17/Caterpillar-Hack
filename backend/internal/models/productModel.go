@@ -15,8 +15,8 @@ type SensorData struct {
 
 type Component struct {
 	Engine struct {
-		Temperature SensorData `json:"Temperature"`
-		OilPressure SensorData `json:"OilPressure"`
+		Temperature SensorData `json:"Temparature"`
+		OilPressure SensorData `json:"Oil Pressure"`
 		Speed       SensorData `json:"Speed"`
 	} `json:"Engine"`
 	Drive struct {
@@ -27,14 +27,14 @@ type Component struct {
 	Fuel struct {
 		WaterInFuel SensorData `json:"Water In Fuel"`
 		Pressure    SensorData `json:"Pressure"`
-		Temperature SensorData `json:"Temperature"`
+		Temperature SensorData `json:"Temparature"`
 		Level       SensorData `json:"Level"`
 	} `json:"Fuel"`
 	Misc struct {
 		AirFilterPressure     SensorData `json:"Air Filter Pressure"`
 		SystemVoltage         SensorData `json:"System Voltage"`
 		HydraulicPumpRate     SensorData `json:"Hydraulic Pump Rate"`
-		ExhaustGasTemperature SensorData `json:"Exhaust Gas Temperature"`
+		ExhaustGasTemperature SensorData `json:"Exhaust Gas Temparature"`
 	} `json:"Misc"`
 }
 
@@ -52,7 +52,7 @@ type Product struct {
 
 type Component1 struct {
 	Engine struct {
-		Temperature float64 `json:"Temperature"`
+		Temperature float64 `json:"Temparature"`
 		Speed       float64 `json:"Speed"`
 		OilPressure float64 `json:"Oil Pressure"`
 	} `json:"Engine"`
@@ -60,7 +60,7 @@ type Component1 struct {
 		WaterInFuel float64 `json:"Water In Fuel"`
 		Level       float64 `json:"Level"`
 		Pressure    float64 `json:"Pressure"`
-		Temperature float64 `json:"Temperature"`
+		Temperature float64 `json:"Temparature"`
 	} `json:"Fuel"`
 	Drive struct {
 		TransmissionPressure float64 `json:"Transmission Pressure"`
@@ -68,7 +68,7 @@ type Component1 struct {
 		PedalSensor          float64 `json:"Pedal Sensor"`
 	} `json:"Drive"`
 	Misc struct {
-		ExhaustGasTemperature float64 `json:"Exhaust Gas Temperature"`
+		ExhaustGasTemperature float64 `json:"Exhaust Gas Temparature"`
 		AirFilterPressure     float64 `json:"Air Filter Presure"`
 		SystemVoltage         float64 `json:"System Voltage"`
 		HydraulicPumpRate     float64 `json:"Hydraulic Pump Rate"`
