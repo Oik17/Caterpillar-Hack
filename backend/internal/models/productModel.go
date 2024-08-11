@@ -25,7 +25,7 @@ type Component struct {
 		TransmissionPressure SensorData `json:"Transmission Pressure"`
 	} `json:"Drive"`
 	Fuel struct {
-		WaterInFuel SensorData `json:"Water In Fuel"`
+		WaterInFuel SensorData `json:"Water in Fuel"`
 		Pressure    SensorData `json:"Pressure"`
 		Temperature SensorData `json:"Temparature"`
 		Level       SensorData `json:"Level"`

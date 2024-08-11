@@ -13,4 +13,13 @@ dropdb:
 dockerfiledb:
 	docker exec -it backend-db-1 bash
 
-.PHONY: run postgres createdb dropdb dockerfiledb
+builddocker:
+	docker build -t guptaakshat/caterpillar-hack-3:latest .
+
+rundocker:
+	docker run -p 8080:8080 guptaakshat/caterpillar-hack-3:latest
+
+deploydocker:
+	docker push guptaakshat/caterpillar-hack-3:latest
+
+.PHONY: run postgres createdb dropdb dockerfiledb builddocker rundocker deploydocker
