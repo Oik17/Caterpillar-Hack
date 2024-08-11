@@ -9,6 +9,17 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import React from "react";
+import { Button } from "@/components/ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuLabel,
+  DropdownMenuRadioGroup,
+  DropdownMenuRadioItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { Input } from "@/components/ui/input";
 import { DropdownMenuRadioGroupDemo } from "@/components/Dropdown";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -18,12 +29,12 @@ import Link from "next/link";
 import axios, { AxiosError } from "axios";
 import { Toaster, toast } from "sonner";
 import { useRouter } from "next/navigation";
-import { Button } from "./ui/button";
 import { useState } from "react";
 
 type Props = {};
 
 const formSchema = z.object({
+  vehicle_name: z.string().min(1,"Please enter a machine name"),
   machine: z.string().min(1, "Please select a machine"),
   engineTemperature: z.string().min(1, "Temperature is required"),
   engineSpeed: z.string().min(1, "Engine Speed is required"),
@@ -45,6 +56,7 @@ const formSchema = z.object({
 
 export const PredictForm = ({}: Props) => {
   const [dataFromChild, setDataFromChild] = useState("");
+  const [position, setPosition] = React.useState("select");
   const handleDataFromChild = async (data: string) => {
     setDataFromChild(data);
     console.log(data);
@@ -55,6 +67,7 @@ export const PredictForm = ({}: Props) => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
+      vehicle_name:"",
       machine: "",
       engineTemperature: "",
       engineSpeed: "",
@@ -75,25 +88,95 @@ export const PredictForm = ({}: Props) => {
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     try {
-      console.log(values);
-      toast.success("Form submitted successfully!");
+      const data = {
+        machine: position,
+        components: {
+          engine: {
+            engineTemperature: Number(values.engineTemperature),
+            engineSpeed: Number(values.engineSpeed),
+            oilPressure: Number(values.oilPressure),
+          },
+          fuel: {
+            WaterInFuel: Number(values.WaterInFuel),
+            fuelLevel: Number(values.fuelLevel),
+            fuelPressure: Number(values.fuelPressure),
+            fuelTemperature: Number(values.fuelTemperature),
+          },
+          drive: {
+            transmissionPressure: Number(values.transmissionPressure),
+            brakeControl: Number(values.brakeControl),
+            pedalSensor: Number(values.pedalSensor),
+          },
+          misc: {
+            exhaustGasTemperature: Number(values.exhaustGasTemperature),
+            airFilterPressure: Number(values.airFilterPressure),
+            systemVoltage: Number(values.systemVoltage),
+            hydraulicPumpRate: Number(values.hydraulicPumpRate),
+          },
+        },
+      };
+      console.log(data);
+
+      const token = localStorage.getItem("Auth");
+
+      const response = await axios.post(
+        "http://localhost:8080/products/create",
+        data,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      console.log("Request successful:", response.data);
+      toast.success(response.data.message);
+      
     } catch (error: AxiosError | any) {
-      console.error("Error:", error);
-      toast.error("Failed to submit form.");
+      console.error("Request failed:", error);
+      toast.error(error.message);
     }
   }
+
   return (
-    <div className="w-full   flex justify-center">
+    <div className="w-full flex justify-center">
       {/* <span className="text-2xl bg-yellow-300 p-2 rounded-md w-full">
         Machine
       </span> */}
-      <Toaster position="top-center" richColors/>
+      <Toaster position="top-center" richColors />
       <div className="w-[80%]">
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(onSubmit)}
             className="space-y-3 flex flex-col"
           >
+            <div className="flex items-center gap-2 md:mt-10 mt-2">
+
+            <span className="text-xl underline decoration-yellow-400">
+                Machine Name :
+              </span>
+              
+                <FormField
+                  control={form.control}
+                  name="vehicle_name"
+                  render={({ field }) => (
+                    <FormItem>
+                      {/* <FormLabel>Machine name</FormLabel> */}
+                      <FormControl>
+                        <Input
+                          type="text"
+                          placeholder="machine name"
+                          {...field}
+                          className="md:md:w-[300px] w-[200px] "
+                        />
+                      </FormControl>
+                      {/* <FormDescription>This is your email.</FormDescription> */}
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+            </div>
             <FormField
               control={form.control}
               name="machine"
@@ -101,14 +184,42 @@ export const PredictForm = ({}: Props) => {
                 <FormItem>
                   <FormLabel>Machine: </FormLabel>
                   <FormControl>
-                    <Input
-                          type="text"
-                          placeholder="machine"
-                          {...field}
-                          className="md:md:w-[300px] w-[200px] "
-                        />
+                    <DropdownMenu>
+                      <DropdownMenuTrigger asChild>
+                        <Button
+                          variant="outline"
+                          className="md:w-[300px] bg-yellow-200 hover:bg-yellow-100"
+                        >
+                          {position || "Select a machine"}
+                        </Button>
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent className="w-56">
+                        <DropdownMenuLabel>Select Machine</DropdownMenuLabel>
+                        <DropdownMenuSeparator />
+                        <DropdownMenuRadioGroup
+                          value={position}
+                          onValueChange={(value) => {
+                            setPosition(value); // Update local state
+                            form.setValue("machine", value); // Update form state
+                            form.trigger("machine"); // Validate machine field
+                          }}
+                        >
+                          <DropdownMenuRadioItem value="Excavator">
+                            Excavator
+                          </DropdownMenuRadioItem>
+                          <DropdownMenuRadioItem value="Articulated Truck">
+                            Articulated Truck
+                          </DropdownMenuRadioItem>
+                          <DropdownMenuRadioItem value="Backhoe Loader">
+                            Backhoe Loader
+                          </DropdownMenuRadioItem>
+                          <DropdownMenuRadioItem value="Dozer">
+                            Dozer
+                          </DropdownMenuRadioItem>
+                        </DropdownMenuRadioGroup>
+                      </DropdownMenuContent>
+                    </DropdownMenu>
                   </FormControl>
-                  {/* <FormDescription>This is your email.</FormDescription> */}
                   <FormMessage />
                 </FormItem>
               )}
@@ -417,7 +528,10 @@ export const PredictForm = ({}: Props) => {
               </div>
             </div>
             <div className="flex justify-center">
-              <Button type="submit" className="md:w-[300px] w-[200px] bg-yellow-400 text-yellow-600 font-bold hover:bg-yellow-300">
+              <Button
+                type="submit"
+                className="md:w-[300px] w-[200px] bg-yellow-400 text-yellow-600 font-bold hover:bg-yellow-300"
+              >
                 Generate Prediction
               </Button>
             </div>
