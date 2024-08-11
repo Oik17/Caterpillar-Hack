@@ -1,0 +1,29 @@
+[
+    {
+      "components": {
+        "Drive": {
+          "Brake Control": 93.86581811994574,
+          "Pedal Sensor": 96.21438248423576,
+          "Transmission Pressure": 99.42735233634149
+        },
+        "Engine": {
+          "Oil Pressure": 97.48814057180894,
+          "Speed": 100.0,
+          "Temparature": 83.87200080535722
+        },
+        "Fuel": {
+          "Level": 97.47449978812578,
+          "Pressure": 79.26149877660143,
+          "Temparature": 99.39737289423081,
+          "Water in Fuel": 99.64690601819335
+        },
+        "Misc": {
+          "Air Filter Pressure": 99.15422006281474,
+          "Exhaust Gas Temparature": 75.18954234059514,
+          "Hydraulic Pump Rate": 97.4550755820497,
+          "System Voltage": 96.90085350522418
+        }
+      },
+      "health_score": 77.35732814552756
+    }
+]

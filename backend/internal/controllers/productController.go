@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"encoding/json"
 	"net/http"
 	"time"
 
@@ -42,7 +43,55 @@ func CreateProduct(c echo.Context) error {
 	return c.JSON(http.StatusOK, product)
 }
 
-// GetProductsOfUser fetches all products for a specific user
+func UpdateProductHealthCheck(c echo.Context) error {
+	productID, err := uuid.Parse(c.Param("id"))
+	if err != nil {
+		return c.JSON(http.StatusBadRequest, map[string]string{
+			"message": "Invalid product ID",
+			"error":   err.Error(),
+		})
+	}
+
+	var healthChecks []models.HealthCheck
+	if err := json.NewDecoder(c.Request().Body).Decode(&healthChecks); err != nil {
+		return c.JSON(http.StatusBadRequest, map[string]string{
+			"message": "Failed to parse input",
+			"error":   err.Error(),
+		})
+	}
+
+	if err := services.UpdateProductHealthCheck(productID, healthChecks); err != nil {
+		return c.JSON(http.StatusInternalServerError, map[string]string{
+			"message": "Failed to update product health check",
+			"error":   err.Error(),
+		})
+	}
+
+	return c.JSON(http.StatusOK, map[string]string{
+		"message": "Product health check updated successfully",
+	})
+}
+
+func GetProductHealthCheck(c echo.Context) error {
+	productID, err := uuid.Parse(c.Param("id"))
+	if err != nil {
+		return c.JSON(http.StatusBadRequest, map[string]string{
+			"message": "Invalid product ID",
+			"error":   err.Error(),
+		})
+	}
+
+	healthChecks, err := services.GetProductHealthCheck(productID)
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, map[string]string{
+			"message": "Failed to retrieve product health check",
+			"error":   err.Error(),
+		})
+	}
+
+	return c.JSON(http.StatusOK, healthChecks)
+}
+
 func GetProductsOfUser(c echo.Context) error {
 	userID := c.Get("user_id").(uuid.UUID)
 	products, err := services.GetProductsByUserID(userID)

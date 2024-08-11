@@ -38,6 +38,36 @@ type Component struct {
 	} `json:"Misc"`
 }
 
+type ComponentHealth struct {
+	Drive struct {
+		BrakeControl         float64 `json:"Brake Control"`
+		PedalSensor          float64 `json:"Pedal Sensor"`
+		TransmissionPressure float64 `json:"Transmission Pressure"`
+	} `json:"Drive"`
+	Engine struct {
+		OilPressure float64 `json:"Oil Pressure"`
+		Speed       float64 `json:"Speed"`
+		Temperature float64 `json:"Temparature"`
+	} `json:"Engine"`
+	Fuel struct {
+		Level       float64 `json:"Level"`
+		Pressure    float64 `json:"Pressure"`
+		Temperature float64 `json:"Temparature"`
+		WaterInFuel float64 `json:"Water in Fuel"`
+	} `json:"Fuel"`
+	Misc struct {
+		AirFilterPressure     float64 `json:"Air Filter Pressure"`
+		ExhaustGasTemperature float64 `json:"Exhaust Gas Temparature"`
+		HydraulicPumpRate     float64 `json:"Hydraulic Pump Rate"`
+		SystemVoltage         float64 `json:"System Voltage"`
+	} `json:"Misc"`
+}
+
+type HealthCheck struct {
+	Components  ComponentHealth `json:"components"`
+	HealthScore float64         `json:"health_score"`
+}
+
 type Product struct {
 	ID                  uuid.UUID      `json:"id"`
 	UserID              uuid.UUID      `json:"user_id"`
@@ -46,8 +76,8 @@ type Product struct {
 	Machine             string         `json:"machine"`
 	Components          Component      `json:"components"`
 	ExpectedFailureDate sql.NullTime   `json:"expected_failure_date"`
-	Data                sql.NullString `json:"data"`
 	HealthCard          sql.NullString `json:"health_card"`
+	HealthCheck         []HealthCheck  `json:"health_check"`
 }
 
 type Component1 struct {

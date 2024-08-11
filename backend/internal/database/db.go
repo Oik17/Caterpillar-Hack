@@ -56,7 +56,6 @@ func runMigrations(db *sqlx.DB) {
 			email VARCHAR(255) NOT NULL UNIQUE,
 			password VARCHAR(255) NOT NULL
 		);
-
 		CREATE TABLE IF NOT EXISTS products (
 			id UUID PRIMARY KEY,
 			user_id UUID REFERENCES users(id),
@@ -64,7 +63,9 @@ func runMigrations(db *sqlx.DB) {
 			vehicle_name VARCHAR(255),
 			machine VARCHAR(255),
 			components JSONB, -- Store components as JSON
-			expected_failure_date DATE
+			expected_failure_date DATE,
+			health_check JSONB, 
+			health_card TEXT
 		);
 
 		CREATE TABLE IF NOT EXISTS products1 (

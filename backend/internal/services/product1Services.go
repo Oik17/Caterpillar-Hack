@@ -24,9 +24,9 @@ func CreateProduct1(input models.Product1) error {
 	return nil
 }
 
-func UpdateHealthScore(id string, healthscore float64) error {
+func UpdateHealthCheck(id string, healthCheckJSON string) error {
 	db := database.DB.Db
-	_, err := db.Exec(`UPDATE products1 SET health_score=$1 WHERE id=$2`, healthscore, id)
+	_, err := db.Exec("UPDATE products SET health_check = $1 WHERE id = $2", healthCheckJSON, id)
 	if err != nil {
 		return err
 	}

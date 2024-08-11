@@ -175,3 +175,35 @@ func UpdateProductDate(date time.Time, id uuid.UUID) error {
 	}
 	return nil
 }
+
+func UpdateProductHealthCheck(productID uuid.UUID, healthChecks []models.HealthCheck) error {
+	db := database.DB.Db
+	healthCheckJSON, err := json.Marshal(healthChecks)
+	if err != nil {
+		return err
+	}
+
+	_, err = db.Exec("UPDATE products SET health_check = $1 WHERE id = $2", healthCheckJSON, productID)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func GetProductHealthCheck(productID uuid.UUID) ([]models.HealthCheck, error) {
+	db := database.DB.Db
+	var healthCheckJSON []byte
+	var healthChecks []models.HealthCheck
+
+	err := db.QueryRow("SELECT health_check FROM products WHERE id = $1", productID).Scan(&healthCheckJSON)
+	if err != nil {
+		return nil, err
+	}
+
+	if err := json.Unmarshal(healthCheckJSON, &healthChecks); err != nil {
+		return nil, err
+	}
+
+	return healthChecks, nil
+}
